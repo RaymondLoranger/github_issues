@@ -20,7 +20,7 @@ Now you can run the application like so for example:
   - escript gi --help
   - escript gi elixir-lang elixir 9 --last --table-style=dark
 
-N.B. The escript is named `gi` for **_g_**ithub **_i_**ssues.
+N.B. The escript is named `gi` for **g**ithub **i**ssues.
 
 ## Example
 
