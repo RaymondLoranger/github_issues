@@ -29,11 +29,11 @@ config :github_issues, strict: [
 config :github_issues, url_template:
   "https://api.github.com/repos/{user}/{project}/issues"
 
-config :io_ansi_table, margins: [
-  top:    1, # line(s) before table
-  bottom: 1, # line(s) after table
-  left:   2  # space(s) left of table
-]
+# config :io_ansi_table, margins: [
+#   top:    1, # line(s) before table
+#   bottom: 1, # line(s) after table
+#   left:   2  # space(s) left of table
+# ]
 
 config :logger, compile_time_purge_level: :info
 
