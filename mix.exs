@@ -76,6 +76,9 @@ defmodule GitHub.Issues.Mixfile do
   end
 
   defp escript_config do
-    [main_module: GitHub.Issues.CLI]
+    [
+      main_module: GitHub.Issues.CLI,
+      name: :gi
+    ]
   end
 end

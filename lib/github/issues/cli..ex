@@ -17,6 +17,7 @@ defmodule GitHub.Issues.CLI do
   @app      Mix.Project.config[:app]
   @aliases  Application.get_env(@app, :aliases)
   @count    Application.get_env(@app, :default_count)
+  @escript  Mix.Local.name_for(:escript, Mix.Project.config)
   @strict   Application.get_env(@app, :strict)
   @switches Application.get_env(@app, :default_switches)
 
@@ -60,8 +61,8 @@ defmodule GitHub.Issues.CLI do
     # Examples of usage on Mac:
     #   ./github_issues laravel elixir
     prefix = case :os.type do
-      {:win32, _} -> "usage: escript github_issues"
-      ___________ -> "usage: ./github_issues"
+      {:win32, _} -> "usage: escript #{@escript}"
+      ___________ -> "usage: ./#{@escript}"
     end
     filler = String.duplicate " ", String.length(prefix)
     line_1 = "[(-h | --help)] <github-user> <github-project>"

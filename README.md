@@ -1,20 +1,25 @@
-# GitHub.Issues
+# GitHub Issues
 
-**TODO: Add description**
+Prints GitHub Issues to STDOUT in a table with borders and colors.
 
-## Installation
+## Using
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `github_issues` to your list of dependencies in `mix.exs`:
+To use `Github Issues` clone it from GitHub:
 
-```elixir
-def deps do
-  [{:github_issues, "~> 0.1.0"}]
-end
-```
+git clone https://github.com/RaymondLoranger/github_issues
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/github_issues](https://hexdocs.pm/github_issues).
+Then run these commands to build the escript:
 
-## ![github_issues_examples](images/github_issues_examples.png)
+cd github_issues
+mix deps.get
+mix escript.build
+
+Now you can run the application:
+
+escript gi --help
+escript gi elixir-lang elixir 9 --last --table-style=dark
+
+## Example
+
+escript gi elixir-lang elixir 9 --last --table-style=dark
+## ![github_issues_example](images/github_issues_example.png)
