@@ -22,8 +22,6 @@ Now you can run the application like so for example:
 
 N.B. The escript is named `gi` for **g**ithub **i**ssues.
 
-## Example
-
-escript gi elixir-lang elixir 9 --last --table-style=dark
+## Examples
 
 ## ![github_issues_examples](images/github_issues_examples.png)
