@@ -137,7 +137,7 @@ defmodule GitHub.Issues.CLI do
         %{
           help: false, last: last, bell: bell, table_style: table_style
         } <- Map.merge(Map.new(@switches), Map.new(switches)),
-        {:ok, style} <- Style.for(table_style) do
+        {:ok, style} <- Style.style_for(table_style) do
       {user, project, last && -count || count, bell, style}
     else
       _ -> :help
