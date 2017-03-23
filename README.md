@@ -23,5 +23,4 @@ Now you can run the application like so for example:
 N.B. The escript is named `gi` for **g**ithub **i**ssues.
 
 ## Examples
-
 ## ![github_issues_examples](images/github_issues_examples.png)
