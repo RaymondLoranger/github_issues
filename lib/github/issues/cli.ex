@@ -52,14 +52,14 @@ defmodule GitHub.Issues.CLI do
   @spec help :: no_return
   defp help do
     # Examples of usage on Windows:
-    #   escript github_issues --help
-    #   escript github_issues elixir-lang elixir 7 --last
-    #   escript github_issues myfreeweb httpotion --bell
-    #   escript github_issues dynamo dynamo -lb 8 -t GREEN
-    #   escript github_issues dynamo dynamo -bl 9 --table-style=dark
-    #   escript github_issues dynamo dynamo 11 -blt light
+    #   escript gi --help
+    #   escript gi elixir-lang elixir 7 --last
+    #   escript gi myfreeweb httpotion --bell
+    #   escript gi dynamo dynamo -lb 8 -t GREEN
+    #   escript gi dynamo dynamo -bl 9 --table-style=dark
+    #   escript gi dynamo dynamo 11 -blt light
     # Examples of usage on Mac:
-    #   ./github_issues laravel elixir
+    #   ./gi laravel elixir
     prefix = case :os.type do
       {:win32, _} -> "usage: escript #{@escript}"
       ___________ -> "usage: ./#{@escript}"
