@@ -5,7 +5,7 @@ defmodule GitHub.Issues.CLI do
   @moduledoc """
   Handles the command line parsing and the dispatch to
   the various functions that end up generating a table
-  of the first or last `n` issues of a GitHub project.
+  of the first or last _n_ issues of a GitHub project.
   """
 
   alias GitHub.Issues
@@ -35,17 +35,13 @@ defmodule GitHub.Issues.CLI do
       Formatter.print_table(issues, count, bell, style)
     else
       :help -> help()
-      {:error, reason} -> report_error(reason)
+      {:error, text} -> report_error(text)
     end
   end
 
-  @spec report_error(any) :: no_return
-  defp report_error(reason) when is_binary(reason) do
-    IO.puts "Error fetching from GitHub: #{reason}"
-    System.halt(2)
-  end
-  defp report_error(reason) do
-    IO.puts "Error fetching from GitHub: #{inspect reason}"
+  @spec report_error(String.t) :: no_return
+  defp report_error(text) do
+    IO.puts "Error fetching from GitHub - #{text}"
     System.halt(2)
   end
 
@@ -77,7 +73,7 @@ defmodule GitHub.Issues.CLI do
         - default <table-style> is #{@switches[:table_style]}
         - <table-style> is one of:
       """
-    Style.texts "    • &tag&filler - &note", &IO.puts/1
+    Style.texts "\s\s\s\s• &tag&filler - &note", &IO.puts/1
     System.halt(0)
   end
 
@@ -86,7 +82,7 @@ defmodule GitHub.Issues.CLI do
 
   `argv` can be `-h` or `--help`, which returns `:help`. Otherwise
   it is a GitHub user name, project name, and optionally the number
-  of issues to format (from the first one). To format the last `n`
+  of issues to format (the first _n_ ones). To format the last _n_
   issues, specify switch `--last` which will return a negative count.
 
   Returns either a tuple of `{user, project, count, bell, style}`
@@ -99,13 +95,13 @@ defmodule GitHub.Issues.CLI do
   ## Switches
 
     - `-h` or `--help`        - for help
-    - `-l` or `--last`        - to format the last `n` issues
+    - `-l` or `--last`        - to format the last _n_ issues
     - `-b` or `--bell`        - to ring the bell
     - `-t` or `--table-style` - to apply a specific table style
 
   ## Table styles
 
-  #{Style.texts "  - &tag&filler - &note\n"}
+  #{Style.texts "\s\s- &tag&filler - &note\n"}
   ## Examples
 
       iex> alias GitHub.Issues.CLI
@@ -117,8 +113,8 @@ defmodule GitHub.Issues.CLI do
       {"user", "project", 99, false, :medium}
 
       iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["user", "project", "88", "--last"])
-      {"user", "project", -88, false, :medium}
+      iex> CLI.parse(["user", "project", "88", "--last", "--bell"])
+      {"user", "project", -88, true, :medium}
 
       iex> alias GitHub.Issues.CLI
       iex> CLI.parse(["user", "project", "6", "--table-style", "dark"])

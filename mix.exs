@@ -9,7 +9,7 @@ defmodule GitHub.Issues.Mixfile do
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       name: "GitHub Issues",
-      source_url: "https://github.com/RaymondLoranger/github_issues",
+      source_url: source_url(),
       description: description(),
       package: package(),
       aliases: aliases(),
@@ -18,19 +18,21 @@ defmodule GitHub.Issues.Mixfile do
     ]
   end
 
+  defp source_url do
+    "https://github.com/RaymondLoranger/github_issues"
+  end
+
   defp description do
     """
     Prints GitHub Issues to STDOUT in a table with borders and colors.
     """
   end
 
-  def package do
+  defp package do
     [
       maintainers: ["Raymond Loranger"],
       licenses: ["MIT"],
-      links: %{
-        "GitHub" => "https://github.com/RaymondLoranger/github_issues"
-      }
+      links: %{"GitHub" => source_url()}
     ]
   end
 
@@ -76,9 +78,6 @@ defmodule GitHub.Issues.Mixfile do
   end
 
   defp escript_config do
-    [
-      main_module: GitHub.Issues.CLI,
-      name: :gi
-    ]
+    [main_module: GitHub.Issues.CLI, name: :gi]
   end
 end

@@ -13,35 +13,41 @@ defmodule GitHub.IssuesTest do
   end
 
   describe "GitHub.Issues.fetch/3" do
-    test "returns {:error, :econnrefused} if bad url given" do
+    test ~S[error "reason: :econnrefused" if bad url given] do
       assert Issues.fetch("any", "any", url_template: "http://localhost:1")
-      == {:error, :econnrefused}
+      == {:error, "reason: :econnrefused"}
     end
 
-    test "returns {:error, :nxdomain} if bad url given" do
+    test ~S[error "reason: :nxdomain" if bad url given] do
       assert Issues.fetch(
         "elixir-lang", "elixir",
         url_template: "https://api.github.org/repos/{user}/{project}/issues"
-      ) == {:error, :nxdomain}
+      ) == {:error, "reason: :nxdomain"}
     end
 
-    test ~s/may return {:error, "301 not found"} if bad url given/ do
+    test ~S[error "status code: 301 (not found)" if bad url given?] do
       assert Issues.fetch(
         "elixir-lang", "elixir",
         url_template: "http://api.github.com/repos/<user>/<project>/issues"
-      ) in [{:error, "301 not found"}, {:error, :connect_timeout}]
+      ) in [
+        {:error, "status code: 301 (not found)"},
+        {:error, "reason: :connect_timeout"}
+      ]
     end
 
-    test ~s/may return {:error, "404 not found"} if bad url given/ do
+    test ~S[error "status code: 404 (not found)" if bad url given?] do
       assert Issues.fetch(
         "any", "any", url_template: "https://api.github.com/what"
-      ) in [{:error, "404 not found"}, {:error, :connect_timeout}]
+      ) in [
+        {:error, "status code: 404 (not found)"},
+        {:error, "reason: :connect_timeout"}
+      ]
     end
 
-    test ~s/returns {:error, "argument error"} if bad url given/ do
+    test ~S[error "exception: argument error" if bad url given] do
       assert Issues.fetch(
         "any", "any", url_template: "htps:/api.github.com/what"
-      ) == {:error, "argument error"}
+      ) == {:error, "exception: argument error"}
     end
   end
 end

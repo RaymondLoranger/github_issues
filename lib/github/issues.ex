@@ -12,7 +12,7 @@ defmodule GitHub.Issues do
   @doc """
   Fetches issues from a GitHub `project` of a given `user`.
 
-  Returns a tuple of either `{:ok, [issues]}` or `{:error, reason}`.
+  Returns a tuple of either `{:ok, [issues]}` or `{:error, text}`.
 
   ## Parameters
 
@@ -22,17 +22,15 @@ defmodule GitHub.Issues do
 
   ## Options
 
-    - `:url_template` - defaults to config value `:url_template`
+    - `:url_template` - defaults to config value `:url_template` (string)
 
   ## Examples
 
       alias GitHub.Issues
       Issues.fetch("laravel", "elixir")
-
-      alias GitHub.Issues
-      Issues.fetch("dynamo", "dynamo")
   """
-  @spec fetch(String.t, String.t, Keyword.t) :: {:ok, [map]} | {:error, any}
+  @spec fetch(String.t, String.t, Keyword.t)
+    :: {:ok, [map]} | {:error, String.t}
   def fetch(user, project, options \\ []) do
     require Logger
     Logger.info(
@@ -44,13 +42,13 @@ defmodule GitHub.Issues do
           {:ok, %{status_code: 200, body: body}} <- HTTPoison.get(url) do
         {:ok, :jsx.decode(body, [:return_maps])}
       else
-        {:ok, %{status_code: 301}} -> {:error, "301 not found"}
-        {:ok, %{status_code: 404}} -> {:error, "404 not found"}
-        {:error, %{reason: reason}} -> {:error, reason}
-        any -> {:error, any}
+        {:ok, %{status_code: 301}} -> {:error, "status code: 301 (not found)"}
+        {:ok, %{status_code: 404}} -> {:error, "status code: 404 (not found)"}
+        {:error, %{reason: reason}} -> {:error, "reason: #{inspect reason}"}
+        any -> {:error, "unknown: #{inspect any}"}
       end
     rescue
-      error -> {:error, Exception.message error}
+      error -> {:error, "exception: #{Exception.message error}"}
     end
   end
 
