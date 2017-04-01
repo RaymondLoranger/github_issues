@@ -26,7 +26,7 @@ On macOS, you would run the application as follows:
   - ./gi --help
   - ./gi elixir-lang elixir 9 --last --table-style=dark
 
-N.B. The escript is named `gi` for **g**ithub **i**ssues.
+N.B. The escript is named `gi` for **g**ithub_**i**ssues.
 
 ## Examples
 ## ![github_issues_examples](images/github_issues_examples.png)
