@@ -101,7 +101,7 @@ defmodule GitHub.Issues.CLI do
 
   ## Table styles
 
-  #{Style.texts "\s\s- &tag&filler - &note\n"}
+  #{Style.texts "\s\s- `&tag`&filler - &note\n"}
   ## Examples
 
       iex> alias GitHub.Issues.CLI
