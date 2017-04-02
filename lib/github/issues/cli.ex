@@ -54,13 +54,13 @@ defmodule GitHub.Issues.CLI do
     #   escript gi dynamo dynamo -lb 8 -t GREEN
     #   escript gi dynamo dynamo -bl 9 --table-style=dark
     #   escript gi dynamo dynamo 11 -blt light
-    # Examples of usage on Mac:
+    # Examples of usage on macOS:
     #   ./gi laravel elixir
     prefix = case :os.type do
       {:win32, _} -> "usage: escript #{@escript}"
       ___________ -> "usage: ./#{@escript}"
     end
-    filler = String.duplicate " ", String.length(prefix)
+    filler = String.duplicate "\s", String.length(prefix)
     line_1 = "[(-h | --help)] <github-user> <github-project>"
     line_2 = "[(-l | --last)] <count> [(-b | --bell)]"
     line_3 = "[(-t | --table-style)=<table-style>]"

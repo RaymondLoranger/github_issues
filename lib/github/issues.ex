@@ -12,7 +12,7 @@ defmodule GitHub.Issues do
   @doc """
   Fetches issues from a GitHub `project` of a given `user`.
 
-  Returns a tuple of either `{:ok, [issues]}` or `{:error, text}`.
+  Returns a tuple of either `{:ok, [issue]}` or `{:error, text}`.
 
   ## Parameters
 

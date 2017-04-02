@@ -30,8 +30,8 @@ defmodule GitHub.IssuesTest do
         "elixir-lang", "elixir",
         url_template: "http://api.github.com/repos/<user>/<project>/issues"
       ) in [
-        {:error, "status code: 301 (not found)"},
-        {:error, "reason: :connect_timeout"}
+        error: "status code: 301 (not found)",
+        error: "reason: :connect_timeout"
       ]
     end
 
@@ -39,8 +39,8 @@ defmodule GitHub.IssuesTest do
       assert Issues.fetch(
         "any", "any", url_template: "https://api.github.com/what"
       ) in [
-        {:error, "status code: 404 (not found)"},
-        {:error, "reason: :connect_timeout"}
+        error: "status code: 404 (not found)",
+        error: "reason: :connect_timeout"
       ]
     end
 
