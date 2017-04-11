@@ -18,7 +18,7 @@ Then run these commands to build the escript:
 
 Now you can run the application like so on Windows:
 
-  - escript gi --help
+  - escript gi --help (now in colors)
   - escript gi elixir-lang elixir 9 --last --table-style=dark
 
 On macOS, you would run the application as follows:

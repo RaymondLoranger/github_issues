@@ -22,6 +22,15 @@ config :github_issues, default_switches: [
   help: false, last: false, bell: false, table_style: "medium"
 ]
 
+config :github_issues, help_attrs: %{
+  arg:     :light_cyan,
+  command: :light_yellow,
+  normal:  :reset,
+  section: :light_green,
+  switch:  :light_black,
+  value:   :light_magenta
+}
+
 config :github_issues, strict: [
   help: :boolean, last: :boolean, bell: :boolean, table_style: :string
 ]
