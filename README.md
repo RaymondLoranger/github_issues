@@ -9,10 +9,10 @@ To use `GitHub Issues`, first clone it from GitHub:
 
   - git clone https://github.com/RaymondLoranger/github_issues
 
-Then run these commands to build the escript:
+Then run these commands (in **Powershell** on Windows) to build the escript:
 
   - cd github_issues
-  - chcp 65001 (if on Windows)
+  - chcp 65001 (on Windows)
   - mix deps.get
   - mix escript.build
 
