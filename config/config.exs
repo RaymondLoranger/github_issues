@@ -17,11 +17,9 @@ config :elixir, ansi_enabled: true # mix messages in colors
 config :github_issues, aliases: [
   h: :help, l: :last, b: :bell, t: :table_style
 ]
-
 config :github_issues, default_switches: [
   help: false, last: false, bell: false, table_style: "medium"
 ]
-
 config :github_issues, help_attrs: %{
   arg:     :light_cyan,
   command: :light_yellow,
@@ -30,11 +28,9 @@ config :github_issues, help_attrs: %{
   switch:  :light_black,
   value:   :light_magenta
 }
-
 config :github_issues, strict: [
   help: :boolean, last: :boolean, bell: :boolean, table_style: :string
 ]
-
 config :github_issues, url_template:
   "https://api.github.com/repos/{user}/{project}/issues"
 
@@ -44,7 +40,14 @@ config :io_ansi_table, margins: [
   left:   1  # space(s) left of table
 ]
 
-config :logger, compile_time_purge_level: :info
+config :logger, backends: [
+  :console, {LoggerFileBackend, :error}, {LoggerFileBackend, :info}
+]
+config :logger, compile_time_purge_level: :info # purges debug messages
+config :logger, :console,
+  colors: [debug: :light_cyan, warn: :light_yellow, error: :light_red]
+config :logger, :error, path: "./log/error.log", level: :error
+config :logger, :info, path: "./log/info.log", level: :info
 
 #
 # And access this configuration in your application as:

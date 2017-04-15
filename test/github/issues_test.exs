@@ -9,7 +9,7 @@ defmodule GitHub.IssuesTest do
   doctest Issues
 
   setup_all do
-    Logger.configure level: :error # prevents info logging
+    Logger.configure level: :error # prevents info messages
   end
 
   describe "GitHub.Issues.fetch/3" do

@@ -8,9 +8,10 @@ defmodule GitHub.Issues.CLI do
   of the first or last _n_ issues of a GitHub project.
   """
 
+  import Logger, only: [error: 1]
+
   alias GitHub.Issues
-  alias IO.ANSI.Table.Formatter
-  alias IO.ANSI.Table.Style
+  alias IO.ANSI.Table.{Formatter, Style}
 
   @type parsed :: {String.t, String.t, integer, boolean, atom} | :help
 
@@ -21,7 +22,6 @@ defmodule GitHub.Issues.CLI do
   @help_attrs Application.get_env(@app, :help_attrs)
   @strict     Application.get_env(@app, :strict)
   @switches   Application.get_env(@app, :default_switches)
-
 
   @doc """
   Parses and processes the command line arguments.
@@ -37,13 +37,14 @@ defmodule GitHub.Issues.CLI do
       Formatter.print_table(issues, count, bell, style)
     else
       :help -> help()
-      {:error, text} -> report_error(text)
+      {:error, text} -> log_error(text)
     end
   end
 
-  @spec report_error(String.t) :: no_return
-  defp report_error(text) do
-    IO.puts "Error fetching from GitHub - #{text}"
+  @spec log_error(String.t) :: no_return
+  defp log_error(text) do
+    error "Error fetching from GitHub - #{text}"
+    Process.sleep(1_000) # ensure message logged before exiting
     System.halt(2)
   end
 

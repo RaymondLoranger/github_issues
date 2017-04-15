@@ -6,6 +6,8 @@ defmodule GitHub.Issues do
   Fetches a list of issues from a GitHub project.
   """
 
+  import Logger, only: [info: 1]
+
   @app          Mix.Project.config[:app]
   @url_template Application.get_env(@app, :url_template)
 
@@ -29,13 +31,10 @@ defmodule GitHub.Issues do
       alias GitHub.Issues
       Issues.fetch("laravel", "elixir")
   """
-  @spec fetch(String.t, String.t, Keyword.t)
-    :: {:ok, [map]} | {:error, String.t}
+  @spec fetch(String.t, String.t, Keyword.t) ::
+    {:ok, [map]} | {:error, String.t}
   def fetch(user, project, options \\ []) do
-    require Logger
-    Logger.info(
-      "Fetching GitHub Issues from project #{project} of user #{user}..."
-    )
+    info "Fetching GitHub Issues from project #{project} of user #{user}..."
     try do
       with url_template <- Keyword.get(options, :url_template, @url_template),
           url <- url(url_template, user, project),
