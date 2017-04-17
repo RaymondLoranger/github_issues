@@ -33,7 +33,8 @@ defmodule GitHub.Issues.CLI do
   @spec main([String.t]) :: :ok | no_return
   def main(argv) do
     with {user, project, count, bell, style} <- parse(argv),
-        {:ok, issues} <- Issues.fetch(user, project) do
+      {:ok, issues} <- Issues.fetch(user, project)
+    do
       Formatter.print_table(issues, count, bell, style)
     else
       :help -> help()
@@ -178,10 +179,10 @@ defmodule GitHub.Issues.CLI do
   @spec reformat({Keyword.t, [String.t], [tuple]}) :: parsed
   defp reformat({switches, args, []}) do
     with {user, project, count} <- normalize(args),
-        %{
-          help: false, last: last, bell: bell, table_style: table_style
-        } <- Map.merge(Map.new(@switches), Map.new(switches)),
-        {:ok, style} <- Style.style_for(table_style) do
+      %{help: false, last: last, bell: bell, table_style: table_style}
+      <- Map.merge(Map.new(@switches), Map.new(switches)),
+      {:ok, style} <- Style.style_for(table_style)
+    do
       {user, project, last && -count || count, bell, style}
     else
       _ -> :help

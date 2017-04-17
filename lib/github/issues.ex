@@ -37,8 +37,9 @@ defmodule GitHub.Issues do
     info "Fetching GitHub Issues from project #{project} of user #{user}..."
     try do
       with url_template <- Keyword.get(options, :url_template, @url_template),
-          url <- url(url_template, user, project),
-          {:ok, %{status_code: 200, body: body}} <- HTTPoison.get(url) do
+        url <- url(url_template, user, project),
+        {:ok, %{status_code: 200, body: body}} <- HTTPoison.get(url)
+      do
         {:ok, :jsx.decode(body, [:return_maps])}
       else
         {:ok, %{status_code: 301}} -> {:error, "status code: 301 (not found)"}
