@@ -15,10 +15,10 @@ use Mix.Config
 config :elixir, ansi_enabled: true # mix messages in colors
 
 config :github_issues, aliases: [
-  h: :help, l: :last, b: :bell, t: :table_style
+  h: :help, l: :last, b: :bell, t: :table_style, m: :max_width
 ]
 config :github_issues, default_switches: [
-  help: false, last: false, bell: false, table_style: "medium"
+  help: false, last: false, bell: false, table_style: "medium", max_width: 88
 ]
 config :github_issues, help_attrs: %{
   arg:     :light_cyan,
@@ -29,7 +29,8 @@ config :github_issues, help_attrs: %{
   value:   :light_magenta
 }
 config :github_issues, strict: [
-  help: :boolean, last: :boolean, bell: :boolean, table_style: :string
+  help: :boolean, last: :boolean, bell: :boolean, table_style: :string,
+  max_width: :integer
 ]
 config :github_issues, url_template:
   "https://api.github.com/repos/{user}/{project}/issues"
@@ -39,7 +40,7 @@ config :io_ansi_table, margins: [
   bottom: 0, # line(s) after table
   left:   1  # space(s) left of table
 ]
-config :io_ansi_table, max_width: 88
+# config :io_ansi_table, max_width: 88
 
 config :logger, backends: [
   :console, {LoggerFileBackend, :error}, {LoggerFileBackend, :info}

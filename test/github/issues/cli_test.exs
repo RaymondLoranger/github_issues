@@ -21,30 +21,30 @@ defmodule GitHub.Issues.CLITest do
 
     test "returns 5 values if 3 given" do
       assert CLI.parse(["user", "project", "99"])
-      == {"user", "project", 99, false, :medium}
+      == {"user", "project", 99, false, :medium, 88}
     end
 
     test "defaults count if not given" do
       assert CLI.parse(["user", "project"])
-      == {"user", "project", @count, false, :medium}
+      == {"user", "project", @count, false, :medium, 88}
       assert CLI.parse(["user", "project", "--last"])
-      == {"user", "project", -@count, false, :medium}
+      == {"user", "project", -@count, false, :medium, 88}
     end
 
     test "returns 5 values if 4 given" do
       assert CLI.parse(["user", "project", "99", "--last"])
-      == {"user", "project", -99, false, :medium}
+      == {"user", "project", -99, false, :medium, 88}
       assert CLI.parse(["user", "project", "--last", "99"])
-      == {"user", "project", -99, false, :medium}
+      == {"user", "project", -99, false, :medium, 88}
     end
 
     test "returns 5 values if count is zero" do
       assert CLI.parse(["user", "project", "0"])
-      == {"user", "project", 0, false, :medium}
+      == {"user", "project", 0, false, :medium, 88}
       assert CLI.parse(["user", "project", "0", "--last"])
-      == {"user", "project", 0, false, :medium}
+      == {"user", "project", 0, false, :medium, 88}
       assert CLI.parse(["user", "project", "-0"])
-      == {"user", "project", 0, false, :medium}
+      == {"user", "project", 0, false, :medium, 88}
     end
 
     test "returns :help if count not positive integer" do

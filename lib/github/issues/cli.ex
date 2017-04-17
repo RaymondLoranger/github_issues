@@ -32,10 +32,10 @@ defmodule GitHub.Issues.CLI do
   """
   @spec main([String.t]) :: :ok | no_return
   def main(argv) do
-    with {user, project, count, bell, style} <- parse(argv),
+    with {user, project, count, bell, style, max_width} <- parse(argv),
       {:ok, issues} <- Issues.fetch(user, project)
     do
-      Formatter.print_table(issues, count, bell, style)
+      Formatter.print_table(issues, count, bell, style, max_width: max_width)
     else
       :help -> help()
       {:error, text} -> log_error(text)
@@ -54,6 +54,7 @@ defmodule GitHub.Issues.CLI do
     # Examples of usage on Windows:
     #   escript gi --help
     #   escript gi elixir-lang elixir 7 --last
+    #   escript gi elixir-lang elixir 7 --last --max-width=50
     #   escript gi myfreeweb httpotion --bell
     #   escript gi dynamo dynamo -lb 8 -t GREEN
     #   escript gi dynamo dynamo -bl 9 --table-style=dark
@@ -72,42 +73,52 @@ defmodule GitHub.Issues.CLI do
     end
     filler = String.duplicate " ", String.length Enum.join(texts)
     prefix = help_format(types, texts)
-    line_1 = help_format(
+    line_user_project = help_format(
       [:switch, :arg, :normal, :arg],
       ["[(-h | --help)] ", "<github-user>", " ", "<github-project>"]
     )
-    line_2 = help_format(
+    line_count = help_format(
       [:switch, :normal, :arg, :normal, :switch],
       ["[(-l | --last)]", " ", "<count>", " ", "[(-b | --bell)]"]
     )
-    line_3 = help_format(
+    line_table_style = help_format(
       [:switch, :arg, :switch],
       ["[(-t | --table-style)=", "<table-style>", "]"]
     )
-    line_4 = help_format(
+    line_max_width = help_format(
+      [:switch, :arg, :switch],
+      ["[(-m | --max-width)=", "<max-width>", "]"]
+    )
+    line_where = help_format(
       [:section],
       ["where:"]
     )
-    line_5 = help_format(
-      [:normal, :arg, :normal],
-      ["  - default ", "<count>", " is #{@count}"]
+    line_default_count = help_format(
+      [:normal, :arg, :normal, :value],
+      ["  - default ", "<count>", " is ", "#{@count}"]
     )
-    line_6 = help_format(
+    line_default_table_style = help_format(
       [:normal, :arg, :normal, :value],
       ["  - default ", "<table-style>", " is ", "#{@switches[:table_style]}"]
     )
-    line_7 = help_format(
+    line_default_max_width = help_format(
+      [:normal, :arg, :normal, :value],
+      ["  - default ", "<max-width>", " is ", "#{@switches[:max_width]}"]
+    )
+    line_table_style_one_of = help_format(
       [:normal, :arg, :normal],
       ["  - ", "<table-style>", " is one of:"]
     )
     IO.write """
-      #{prefix} #{line_1}
-      #{filler} #{line_2}
-      #{filler} #{line_3}
-      #{line_4}
-      #{line_5}
-      #{line_6}
-      #{line_7}
+      #{prefix} #{line_user_project}
+      #{filler} #{line_count}
+      #{filler} #{line_table_style}
+      #{filler} #{line_max_width}
+      #{line_where}
+      #{line_default_count}
+      #{line_default_table_style}
+      #{line_default_max_width}
+      #{line_table_style_one_of}
       """
     template = help_format(
       [:normal, :value, :normal],
@@ -134,7 +145,7 @@ defmodule GitHub.Issues.CLI do
   of issues to format (the first _n_ ones). To format the last _n_
   issues, specify switch `--last` which will return a negative count.
 
-  Returns either a tuple of `{user, project, count, bell, style}`
+  Returns either a tuple of `{user, project, count, bell, style, max_width}`
   or `:help` if `--help` was given.
 
   ## Parameters
@@ -147,6 +158,7 @@ defmodule GitHub.Issues.CLI do
     - `-l` or `--last`        - to format the last _n_ issues
     - `-b` or `--bell`        - to ring the bell
     - `-t` or `--table-style` - to apply a specific table style
+    - `-m` or `--max-width`   - to cap column widths
 
   ## Table styles
 
@@ -159,15 +171,15 @@ defmodule GitHub.Issues.CLI do
 
       iex> alias GitHub.Issues.CLI
       iex> CLI.parse(["user", "project", "99"])
-      {"user", "project", 99, false, :medium}
+      {"user", "project", 99, false, :medium, 88}
 
       iex> alias GitHub.Issues.CLI
       iex> CLI.parse(["user", "project", "88", "--last", "--bell"])
-      {"user", "project", -88, true, :medium}
+      {"user", "project", -88, true, :medium, 88}
 
       iex> alias GitHub.Issues.CLI
       iex> CLI.parse(["user", "project", "6", "--table-style", "dark"])
-      {"user", "project", 6, false, :dark}
+      {"user", "project", 6, false, :dark, 88}
   """
   @spec parse([String.t]) :: parsed
   def parse(argv) do
@@ -179,11 +191,12 @@ defmodule GitHub.Issues.CLI do
   @spec reformat({Keyword.t, [String.t], [tuple]}) :: parsed
   defp reformat({switches, args, []}) do
     with {user, project, count} <- normalize(args),
-      %{help: false, last: last, bell: bell, table_style: table_style}
-      <- Map.merge(Map.new(@switches), Map.new(switches)),
+      %{help: false, last: last, bell: bell, table_style: table_style,
+        max_width: max_width
+      } <- Map.merge(Map.new(@switches), Map.new(switches)),
       {:ok, style} <- Style.style_for(table_style)
     do
-      {user, project, last && -count || count, bell, style}
+      {user, project, last && -count || count, bell, style, max_width}
     else
       _ -> :help
     end
