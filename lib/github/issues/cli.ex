@@ -13,7 +13,7 @@ defmodule GitHub.Issues.CLI do
   alias GitHub.Issues
   alias IO.ANSI.Table.{Formatter, Style}
 
-  @type parsed :: {String.t, String.t, integer, boolean, atom} | :help
+  @type parsed :: {String.t, String.t, integer, boolean, atom, integer} | :help
 
   @app        Mix.Project.config[:app]
   @aliases    Application.get_env(@app, :aliases)
