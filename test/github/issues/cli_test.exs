@@ -19,7 +19,7 @@ defmodule GitHub.Issues.CLITest do
       assert CLI.parse(["user", "project", "--help"]) == :help
     end
 
-    test "returns 5 values if 3 given" do
+    test "returns 6 values if 3 given" do
       assert CLI.parse(["user", "project", "99"])
       == {"user", "project", 99, false, :medium, 88}
     end
@@ -31,14 +31,14 @@ defmodule GitHub.Issues.CLITest do
       == {"user", "project", -@count, false, :medium, 88}
     end
 
-    test "returns 5 values if 4 given" do
+    test "returns 6 values if 4 given" do
       assert CLI.parse(["user", "project", "99", "--last"])
       == {"user", "project", -99, false, :medium, 88}
       assert CLI.parse(["user", "project", "--last", "99"])
       == {"user", "project", -99, false, :medium, 88}
     end
 
-    test "returns 5 values if count is zero" do
+    test "returns 6 values if count is zero" do
       assert CLI.parse(["user", "project", "0"])
       == {"user", "project", 0, false, :medium, 88}
       assert CLI.parse(["user", "project", "0", "--last"])
