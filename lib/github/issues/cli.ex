@@ -24,7 +24,7 @@ defmodule GitHub.Issues.CLI do
   @switches   Application.get_env(@app, :default_switches)
 
   @doc """
-  Parses and processes the command line arguments.
+  Parses and processes the `command line arguments`.
 
   ## Parameters
 
@@ -138,7 +138,7 @@ defmodule GitHub.Issues.CLI do
   end
 
   @doc """
-  Parses the command line arguments.
+  Parses the `command line arguments`.
 
   `argv` can be `-h` or `--help`, which returns `:help`. Otherwise
   it is a GitHub user name, project name, and optionally the number
