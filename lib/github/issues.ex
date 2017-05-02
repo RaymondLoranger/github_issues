@@ -8,6 +8,8 @@ defmodule GitHub.Issues do
 
   import Logger, only: [info: 1]
 
+  @type issue :: map
+
   @app          Mix.Project.config[:app]
   @url_template Application.get_env(@app, :url_template)
 
@@ -32,7 +34,7 @@ defmodule GitHub.Issues do
       Issues.fetch("laravel", "elixir")
   """
   @spec fetch(String.t, String.t, Keyword.t) ::
-    {:ok, [map]} | {:error, String.t}
+    {:ok, [issue]} | {:error, String.t}
   def fetch(user, project, options \\ []) do
     info "Fetching GitHub Issues from project #{project} of user #{user}..."
     try do

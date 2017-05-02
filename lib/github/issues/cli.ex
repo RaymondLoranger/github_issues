@@ -13,7 +13,9 @@ defmodule GitHub.Issues.CLI do
   alias GitHub.Issues
   alias IO.ANSI.Table.{Formatter, Style}
 
-  @type parsed :: {String.t, String.t, integer, boolean, atom, integer} | :help
+  @type parsed ::
+    {String.t, String.t, integer, boolean, Style.t, Formatter.column_width}
+    | :help
 
   @app        Mix.Project.config[:app]
   @aliases    Application.get_env(@app, :aliases)
@@ -145,7 +147,8 @@ defmodule GitHub.Issues.CLI do
   of issues to format (the first _n_ ones). To format the last _n_
   issues, specify switch `--last` which will return a negative count.
 
-  Returns either a tuple of `{user, project, count, bell, style, max_width}`
+  Returns either a tuple of
+  `{user, project, count, bell, table_style, max_width}`
   or `:help` if `--help` was given.
 
   ## Parameters
