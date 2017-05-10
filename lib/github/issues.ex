@@ -68,7 +68,7 @@ defmodule GitHub.Issues do
       iex> alias GitHub.Issues
       iex> app = Mix.Project.config[:app]
       iex> url_template = Application.get_env app, :url_template
-      iex> Issues.url(url_template, "laravel", "elixir")
+      iex> Issues.url url_template, "laravel", "elixir"
       "https://api.github.com/repos/laravel/elixir/issues"
 
       iex> alias GitHub.Issues
