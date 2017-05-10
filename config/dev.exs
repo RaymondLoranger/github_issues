@@ -7,7 +7,7 @@ config :io_ansi_table, align_attrs: %{
   "number" => :right
 }
 config :io_ansi_table, headers: [
-  "number", "created_at", "updated_at", "id", "title"
+  "number", "created_at", "id", "title"
 ]
 config :io_ansi_table, header_fixes: %{
   ~r[ at$]i => " at",
