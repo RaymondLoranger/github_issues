@@ -13,8 +13,10 @@ defmodule GitHub.Issues.CLI do
   alias GitHub.Issues
   alias IO.ANSI.Table.{Formatter, Style}
 
+  @type bell :: boolean
+  @type count :: integer
   @type parsed ::
-    {String.t, String.t, integer, boolean, Style.t, Formatter.column_width}
+    {Issues.user, Issues.project, count, bell, Style.t, Formatter.column_width}
     | :help
 
   @app        Mix.Project.config[:app]
@@ -206,7 +208,8 @@ defmodule GitHub.Issues.CLI do
   end
   defp reformat(_), do: :help
 
-  @spec normalize([String.t]) :: {String.t, String.t, non_neg_integer} | :error
+  @spec normalize([String.t]) ::
+    {Issues.user, Issues.project, non_neg_integer} | :error
   defp normalize [user, project, count] do
     with {int, ""} when int >= 0 <- Integer.parse(count) do
       {user, project, int}

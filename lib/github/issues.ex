@@ -9,6 +9,8 @@ defmodule GitHub.Issues do
   import Logger, only: [info: 1]
 
   @type issue :: map
+  @type project :: String.t
+  @type user :: String.t
 
   @app          Mix.Project.config[:app]
   @url_template Application.get_env @app, :url_template
@@ -33,8 +35,7 @@ defmodule GitHub.Issues do
       alias GitHub.Issues
       Issues.fetch("laravel", "elixir")
   """
-  @spec fetch(String.t, String.t, Keyword.t) ::
-    {:ok, [issue]} | {:error, String.t}
+  @spec fetch(user, project, Keyword.t) :: {:ok, [issue]} | {:error, String.t}
   def fetch(user, project, options \\ []) do
     info "Fetching GitHub Issues from project #{project} of user #{user}..."
     try do
@@ -76,7 +77,7 @@ defmodule GitHub.Issues do
       iex> Issues.url url_template, "José", "Elixir"
       "elixir-lang.org/Elixir/José/wow"
   """
-  @spec url(String.t, String.t, String.t) :: String.t
+  @spec url(String.t, user, project) :: String.t
   def url(url_template, user, project) do
     url_template
     |> String.replace(~r/{user}|<user>/, user)

@@ -18,7 +18,8 @@ config :github_issues, aliases: [
   h: :help, l: :last, b: :bell, t: :table_style, m: :max_width
 ]
 config :github_issues, default_switches: [
-  help: false, last: false, bell: false, table_style: "medium", max_width: 88
+  help: false, last: false, bell: false, table_style: "medium",
+  max_width: 88
 ]
 config :github_issues, help_attrs: %{
   arg:     :light_cyan,
