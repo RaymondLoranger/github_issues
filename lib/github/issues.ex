@@ -11,7 +11,7 @@ defmodule GitHub.Issues do
   @type issue :: map
 
   @app          Mix.Project.config[:app]
-  @url_template Application.get_env(@app, :url_template)
+  @url_template Application.get_env @app, :url_template
 
   @doc """
   Fetches issues from a GitHub `project` of a given `user`.
@@ -26,7 +26,7 @@ defmodule GitHub.Issues do
 
   ## Options
 
-    - `:url_template` - defaults to config value `:url_template` (string)
+    - `:url_template` - defaults to config for `:url_template` (string)
 
   ## Examples
 
@@ -67,13 +67,13 @@ defmodule GitHub.Issues do
 
       iex> alias GitHub.Issues
       iex> app = Mix.Project.config[:app]
-      iex> url_template = Application.get_env(app, :url_template)
+      iex> url_template = Application.get_env app, :url_template
       iex> Issues.url(url_template, "laravel", "elixir")
       "https://api.github.com/repos/laravel/elixir/issues"
 
       iex> alias GitHub.Issues
       iex> url_template = "elixir-lang.org/<project>/{user}/wow"
-      iex> Issues.url(url_template, "José", "Elixir")
+      iex> Issues.url url_template, "José", "Elixir"
       "elixir-lang.org/Elixir/José/wow"
   """
   @spec url(String.t, String.t, String.t) :: String.t

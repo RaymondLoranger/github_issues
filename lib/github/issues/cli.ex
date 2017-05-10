@@ -18,12 +18,12 @@ defmodule GitHub.Issues.CLI do
     | :help
 
   @app        Mix.Project.config[:app]
-  @aliases    Application.get_env(@app, :aliases)
-  @count      Application.get_env(@app, :default_count)
-  @escript    Mix.Local.name_for(:escript, Mix.Project.config)
-  @help_attrs Application.get_env(@app, :help_attrs)
-  @strict     Application.get_env(@app, :strict)
-  @switches   Application.get_env(@app, :default_switches)
+  @aliases    Application.get_env @app, :aliases
+  @count      Application.get_env @app, :default_count
+  @escript    Mix.Local.name_for :escript, Mix.Project.config
+  @help_attrs Application.get_env @app, :help_attrs
+  @strict     Application.get_env @app, :strict
+  @switches   Application.get_env @app, :default_switches
 
   @doc """
   Parses and processes the `command line arguments`.
@@ -169,19 +169,19 @@ defmodule GitHub.Issues.CLI do
   ## Examples
 
       iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["-h"])
+      iex> CLI.parse ["-h"]
       :help
 
       iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["user", "project", "99"])
+      iex> CLI.parse ["user", "project", "99"]
       {"user", "project", 99, false, :medium, 88}
 
       iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["user", "project", "88", "--last", "--bell"])
+      iex> CLI.parse ["user", "project", "88", "--last", "--bell"]
       {"user", "project", -88, true, :medium, 88}
 
       iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["user", "project", "6", "--table-style", "dark"])
+      iex> CLI.parse ["user", "project", "6", "--table-style", "dark"]
       {"user", "project", 6, false, :dark, 88}
   """
   @spec parse([String.t]) :: parsed
@@ -192,7 +192,7 @@ defmodule GitHub.Issues.CLI do
   end
 
   @spec reformat({Keyword.t, [String.t], [tuple]}) :: parsed
-  defp reformat({switches, args, []}) do
+  defp reformat {switches, args, []} do
     with {user, project, count} <- normalize(args),
       %{help: false, last: last, bell: bell, table_style: table_style,
         max_width: max_width
@@ -207,7 +207,7 @@ defmodule GitHub.Issues.CLI do
   defp reformat(_), do: :help
 
   @spec normalize([String.t]) :: {String.t, String.t, non_neg_integer} | :error
-  defp normalize([user, project, count]) do
+  defp normalize [user, project, count] do
     with {int, ""} when int >= 0 <- Integer.parse(count) do
       {user, project, int}
     else
