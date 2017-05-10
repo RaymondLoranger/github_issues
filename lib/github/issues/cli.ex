@@ -214,6 +214,10 @@ defmodule GitHub.Issues.CLI do
       _ -> :error
     end
   end
-  defp normalize([user, project]), do: {user, project, @count}
-  defp normalize(_), do: :error
+  defp normalize [user, project] do
+    {user, project, @count}
+  end
+  defp normalize(_) do
+    :error
+  end
 end
