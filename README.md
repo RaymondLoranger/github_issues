@@ -26,8 +26,8 @@ On macOS, you would run the application as follows:
   - ./gi --help
   - ./gi elixir-lang elixir 9 --last --table-style=dark
 
-N.B. The escript is named `gi` for **g**ithub_**i**ssues. The ideal
-background color is **navy blue**.
+N.B. The escript is named `gi` for **g**ithub_**i**ssues. On Windows,
+the background color should be **DarkBlue** and the font **Consolas**.
 
 ## Examples
 ## ![github_issues_examples](images/github_issues_examples.png)
