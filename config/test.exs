@@ -3,9 +3,9 @@ use Mix.Config
 
 config :github_issues, default_count: 5
 
-config :io_ansi_table, align_attrs: %{
-  "number" => :right
-}
+config :io_ansi_table, align_specs: [
+  right: "number"
+]
 config :io_ansi_table, headers: [
   "number", "created_at", "state", "id", "title"
 ]
@@ -13,4 +13,6 @@ config :io_ansi_table, header_fixes: %{
   ~r[ at$]i => " at",
   ~r[^id$]i => "ID"
 }
-config :io_ansi_table, key_headers: ["created_at"]
+config :io_ansi_table, sort_specs: [
+  "created_at"
+]

@@ -1,4 +1,3 @@
-
 # GitHub Issues
 
 Prints GitHub Issues to STDOUT in a table with borders and colors.
@@ -18,8 +17,8 @@ Then run these commands (in **Powershell** on Windows) to build the escript:
 
 Now you can run the application like so on Windows:
 
-  - escript gi --help (now in colors)
-  - escript gi elixir-lang elixir 9 --last --table-style=dark
+  - escript gi --help
+  - escript gi elixir-lang elixir 9 -blt dark
 
 On macOS, you would run the application as follows:
 
