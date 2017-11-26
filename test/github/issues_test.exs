@@ -39,8 +39,11 @@ defmodule GitHub.IssuesTest do
 
     test ~S[error "exception: argument error" if bad url given] do
       url = "htps:/api.github.com/what"
-      assert Issues.fetch("any", "any", url) ==
-        {:error, "exception: argument error"}
+      assert Issues.fetch("any", "any", url) in
+        [
+          error: "exception: argument error",
+          error: "reason: :nxdomain"
+        ]
     end
   end
 end

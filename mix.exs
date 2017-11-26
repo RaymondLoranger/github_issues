@@ -56,7 +56,6 @@ defmodule GitHub.Issues.Mixfile do
       {:earmark, "~> 1.0", only: :dev},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false},
       {:dialyxir, "~> 0.5", only: :dev, runtime: false},
-      {:hackney, "== 1.7.1", override: true},
       {:httpoison, "~> 0.11"},
       {:jsx, "~> 2.0"},
       {:logger_file_backend, "~> 0.0.9"}
