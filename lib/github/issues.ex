@@ -13,7 +13,7 @@ defmodule GitHub.Issues do
 
   require Logger
 
-  @typep issue :: Access.container
+  @typep issue :: map
 
   @url_template Application.get_env(@app, :url_template)
 
@@ -33,7 +33,8 @@ defmodule GitHub.Issues do
       alias GitHub.Issues
       Issues.fetch("laravel", "elixir")
   """
-  @spec fetch(CLI.user, CLI.project) :: {:ok, [issue]} | {:error, String.t}
+  @spec fetch(CLI.user, CLI.project, String.t) ::
+          {:ok, [issue]} | {:error, String.t}
   def fetch(user, project, url_template \\ @url_template) do
     Logger.info("Fetching GitHub Issues from #{user}/#{project}...")
     try do
@@ -50,6 +51,8 @@ defmodule GitHub.Issues do
       error -> {:error, "exception: #{Exception.message(error)}"}
     end
   end
+
+  ## Private functions
 
   # @doc """
   # Returns a URL based on `user` and `project`.

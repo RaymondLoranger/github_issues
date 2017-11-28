@@ -1,4 +1,3 @@
-
 defmodule GitHub.IssuesTest do
   @moduledoc false
 

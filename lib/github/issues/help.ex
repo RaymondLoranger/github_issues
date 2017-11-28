@@ -10,7 +10,7 @@ defmodule GitHub.Issues.Help do
   @help_attrs Application.get_env(@app, :help_attrs)
   @switches Application.get_env(@app, :default_switches)
 
-  @spec show_help :: no_return
+  @spec show_help() :: no_return
   def show_help() do
     # Examples of usage on Windows:
     #   escript gi --help

@@ -1,4 +1,3 @@
-
 defmodule GitHub.Issues.CLITest do
   @moduledoc false
 
