@@ -45,7 +45,6 @@ defmodule GitHub.Issues do
         {:ok, %{status_code: 301}} -> {:error, "status code: 301 (not found)"}
         {:ok, %{status_code: 404}} -> {:error, "status code: 404 (not found)"}
         {:error, %{reason: reason}} -> {:error, "reason: #{inspect reason}"}
-        any -> {:error, "unknown: #{inspect any}"}
       end
     rescue
       error -> {:error, "exception: #{Exception.message(error)}"}

@@ -4,7 +4,7 @@ defmodule GitHub.Issues.Mixfile do
   def project() do
     [
       app: :github_issues,
-      version: "0.3.3",
+      version: "0.3.4",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       name: "GitHub Issues",
@@ -14,10 +14,7 @@ defmodule GitHub.Issues.Mixfile do
       aliases: aliases(),
       escript: escript(),
       deps: deps(),
-      dialyzer: [
-        plt_add_apps: [:mix],
-        ignore_warnings: "dialyzer.ignore-warnings"
-      ]
+      dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
     ]
   end
 
@@ -43,7 +40,7 @@ defmodule GitHub.Issues.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application() do
     [
-      extra_applications: [:logger, :httpoison, :jsx]
+      extra_applications: [:logger]
     ]
   end
 
