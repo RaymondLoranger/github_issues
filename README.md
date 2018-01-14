@@ -8,7 +8,7 @@ To use `GitHub Issues`, first clone it from GitHub:
 
   - git clone https://github.com/RaymondLoranger/github_issues
 
-Then run these commands (in **Powershell** on Windows) to build the escript:
+Then run these commands to build the escript:
 
   - cd github_issues
   - chcp 65001 (on Windows)
@@ -25,8 +25,7 @@ On macOS, you would run the application as follows:
   - ./gi --help
   - ./gi elixir-lang elixir 9 --last --table-style=dark
 
-N.B. The escript is named `gi` for **g**ithub_**i**ssues. On Windows,
-the background color should be **DarkBlue** and the font **Consolas**.
+N.B. The escript is named `gi` for **g**ithub_**i**ssues.
 
 ## Examples
 ## ![github_issues_examples](images/github_issues_examples.png)
