@@ -18,9 +18,9 @@ defmodule GitHub.Issues.CLI do
 
   @type bell :: boolean
   @type count :: integer
-  @type parsed :: {user, project, count, bell, Style.t} | :help
-  @type project :: String.t
-  @type user :: String.t
+  @type parsed :: {user, project, count, bell, Style.t()} | :help
+  @type project :: String.t()
+  @type user :: String.t()
 
   @aliases Application.get_env(@app, :aliases)
   @async Application.get_env(:io_ansi_table, :async)
@@ -35,17 +35,17 @@ defmodule GitHub.Issues.CLI do
 
     - `argv` - command line arguments (list)
   """
-  @spec main([String.t]) :: :ok | no_return
+  @spec main([String.t()]) :: :ok | no_return
   def main(argv) do
     with {user, project, count, bell, style} <- parse(argv),
          {:ok, issues} <- Issues.fetch(user, project) do
       Table.format(issues, count: count, bell: bell, style: style)
       # Ensure table has printed before returning...
-      Process.sleep(@async && 2000 || 0)
+      Process.sleep((@async && 2000) || 0)
     else
       :help -> Help.show_help()
       {:error, text} -> log_error(text)
-      any -> log_error("unknown: #{inspect any}")
+      any -> log_error("unknown: #{inspect(any)}")
     end
   end
 
@@ -95,7 +95,7 @@ defmodule GitHub.Issues.CLI do
       iex> CLI.parse(["user", "project", "6", "--table-style", "dark"])
       {"user", "project", 6, false, :dark}
   """
-  @spec parse([String.t]) :: parsed
+  @spec parse([String.t()]) :: parsed
   def parse(argv) do
     argv
     |> OptionParser.parse(strict: @strict, aliases: @aliases)
@@ -104,30 +104,33 @@ defmodule GitHub.Issues.CLI do
 
   ## Private functions
 
-  @spec log_error(String.t) :: no_return
+  @spec log_error(String.t()) :: no_return
   defp log_error(text) do
     Logger.error("Error fetching from GitHub - #{text}")
-    Process.sleep(1000) # ensure message logged before exiting
+    # Ensure message logged before exiting...
+    Process.sleep(1000)
     System.halt(2)
   end
 
-  @spec to_parsed({Keyword.t, [String.t], [tuple]}) :: parsed
+  @spec to_parsed({Keyword.t(), [String.t()], [tuple]}) :: parsed
   defp to_parsed({switches, args, []}) do
     with {user, project, count} <- to_tuple(args),
          %{help: false, last: last, bell: bell, table_style: table_style} <-
            Map.merge(Map.new(@switches), Map.new(switches)),
          {:ok, style} <- Style.from_switch_arg(table_style),
-         do: {user, project, last && -count || count, bell, style},
+         do: {user, project, (last && -count) || count, bell, style},
          else: (_ -> :help)
   end
+
   defp to_parsed(_), do: :help
 
-  @spec to_tuple([String.t]) :: {user, project, non_neg_integer} | :error
+  @spec to_tuple([String.t()]) :: {user, project, non_neg_integer} | :error
   defp to_tuple([user, project, count]) do
     with {int, ""} when int >= 0 <- Integer.parse(count),
          do: {user, project, int},
          else: (_ -> :error)
   end
+
   defp to_tuple([user, project]), do: {user, project, @count}
   defp to_tuple(_), do: :error
 end

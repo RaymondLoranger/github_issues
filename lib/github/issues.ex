@@ -33,10 +33,11 @@ defmodule GitHub.Issues do
       alias GitHub.Issues
       Issues.fetch("laravel", "elixir")
   """
-  @spec fetch(CLI.user, CLI.project, String.t) ::
-          {:ok, [issue]} | {:error, String.t}
+  @spec fetch(CLI.user(), CLI.project(), String.t()) ::
+          {:ok, [issue]} | {:error, String.t()}
   def fetch(user, project, url_template \\ @url_template) do
     Logger.info("Fetching GitHub Issues from #{user}/#{project}...")
+
     try do
       with url <- url(url_template, user, project),
            {:ok, %{status_code: 200, body: body}} <- HTTPoison.get(url) do
@@ -44,7 +45,7 @@ defmodule GitHub.Issues do
       else
         {:ok, %{status_code: 301}} -> {:error, "status code: 301 (not found)"}
         {:ok, %{status_code: 404}} -> {:error, "status code: 404 (not found)"}
-        {:error, %{reason: reason}} -> {:error, "reason: #{inspect reason}"}
+        {:error, %{reason: reason}} -> {:error, "reason: #{inspect(reason)}"}
       end
     rescue
       error -> {:error, "exception: #{Exception.message(error)}"}
@@ -75,7 +76,7 @@ defmodule GitHub.Issues do
   #     iex> Issues.url url_template, "José", "Elixir"
   #     "elixir-lang.org/Elixir/José/wow"
   # """
-  @spec url(String.t, CLI.user, CLI.project) :: String.t
+  @spec url(String.t(), CLI.user(), CLI.project()) :: String.t()
   defp url(url_template, user, project) do
     url_template
     |> String.replace(~r/{user}|<user>/, user)
