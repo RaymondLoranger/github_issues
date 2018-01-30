@@ -8,7 +8,7 @@ defmodule GitHub.IssuesTest do
   doctest Issues
 
   setup_all do
-    # prevents info messages
+    # Prevents info messages...
     Logger.configure(level: :error)
   end
 

@@ -4,7 +4,7 @@ defmodule GitHub.Issues.Mixfile do
   def project do
     [
       app: :github_issues,
-      version: "0.3.14",
+      version: "0.3.15",
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       name: "GitHub Issues",
@@ -67,10 +67,13 @@ defmodule GitHub.Issues.Mixfile do
 
   defp copy_images(_) do
     File.cp_r("images", "doc/images", fn src, dst ->
-      # => true
+      # Always true...
       src || dst
-      # IO.gets(~s|Overwriting "#{dst}" with "#{src}".\nProceed? [Yn]\s|)
-      # in ["y\n", "Y\n"]
+
+      # IO.gets(~s|Overwriting "#{dst}" with "#{src}".\nProceed? [Yn]\s|) in [
+      #   "y\n",
+      #   "Y\n"
+      # ]
     end)
   end
 
