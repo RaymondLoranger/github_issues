@@ -25,4 +25,8 @@ On macOS, you would run the application as follows:
   - ./gi elixir-lang elixir 9 --last --table-style=dark
 
 ## Examples
-## ![github_issues_examples](images/github_issues_examples.png)
+## ![medium](images/medium.png)
+## ![medium_alt](images/medium_alt.png)
+## ![medium_mult](images/medium_mult.png)
+## ![green_alt](images/green_alt.png)
+## ![green_mult](images/green_mult.png)
