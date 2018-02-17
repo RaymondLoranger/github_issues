@@ -30,3 +30,4 @@ On macOS, you would run the application as follows:
 ## ![medium_mult](images/medium_mult.png)
 ## ![green_alt](images/green_alt.png)
 ## ![green_mult](images/green_mult.png)
+## ![green_mult](images/green_mult.jpg)
