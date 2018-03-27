@@ -2,12 +2,17 @@
 # │ Inspired by the book "Programming Elixir" by Dave Thomas. │
 # └───────────────────────────────────────────────────────────┘
 defmodule GitHub.Issues.CLI do
+  use PersistConfig
+
+  @home_page Application.get_env(@app, :home_page)
+
   @moduledoc """
   Parses the command line and generates a table of
   the first or last _n_ issues of a GitHub project.
-  """
 
-  use PersistConfig
+  Inspired by the book [Programming Elixir](#{@home_page})
+  by Dave Thomas.
+  """
 
   alias GitHub.Issues
   alias GitHub.Issues.Help
