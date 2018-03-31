@@ -2,6 +2,8 @@
 
 Prints GitHub Issues to STDOUT in a table with borders and colors.
 
+##### Inspired by the book [Programming Elixir](https://pragprog.com/book/elixir16/programming-elixir-1-6) by Dave Thomas.
+
 ## Using
 
 To use `GitHub Issues`, first clone it from GitHub:

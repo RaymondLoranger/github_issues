@@ -4,8 +4,8 @@ defmodule GitHub.Issues.Mixfile do
   def project do
     [
       app: :github_issues,
-      version: "0.4.7",
-      elixir: "~> 1.5",
+      version: "0.4.9",
+      elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       name: "GitHub Issues",
       source_url: source_url(),
