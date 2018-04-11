@@ -12,14 +12,14 @@ config :io_ansi_table,
     "number",
     "created_at",
     "state",
-    "id",
+    # "id",
     "title"
   ]
 
 config :io_ansi_table,
   header_fixes: %{
-    ~r[ at$]i => " at",
-    ~r[^id$]i => "ID"
+    # ~r[^id$]i => "ID"
+    ~r[ at$]i => " at"
   }
 
 config :io_ansi_table,
