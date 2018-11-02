@@ -1,6 +1,4 @@
 defmodule GitHub.Issues.Help do
-  @moduledoc false
-
   use PersistConfig
 
   alias IO.ANSI.Table.Style

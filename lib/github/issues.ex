@@ -2,10 +2,9 @@
 # │ Inspired by the book "Programming Elixir" by Dave Thomas. │
 # └───────────────────────────────────────────────────────────┘
 defmodule GitHub.Issues do
-  # @moduledoc """
-  # Fetches a list of issues from a GitHub project.
-  # """
-  @moduledoc false
+  @moduledoc """
+  Fetches a list of issues from a GitHub project.
+  """
 
   use PersistConfig
 
