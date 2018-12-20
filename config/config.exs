@@ -52,5 +52,4 @@ config :logger, :info_log, format: format
 config :logger, :info_log, path: "./log/info.log", level: :info
 
 import_config "#{Mix.env()}.exs"
-import_config "persist.exs"
-import_config "persist_book_ref.exs"
+import_config "persist*.exs"

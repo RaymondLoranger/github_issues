@@ -27,9 +27,6 @@ config :github_issues,
   }
 
 config :github_issues,
-  home_page: "https://pragprog.com/book/elixir16/programming-elixir-1-6"
-
-config :github_issues,
   strict: [
     help: :boolean,
     last: :boolean,

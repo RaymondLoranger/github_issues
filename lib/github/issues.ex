@@ -42,16 +42,25 @@ defmodule GitHub.Issues do
            {:ok, %{status_code: 200, body: body}} <- HTTPoison.get(url) do
         {:ok, :jsx.decode(body, [:return_maps])}
       else
-        {:ok, %{status_code: 301}} -> {:error, "status code: 301 (not found)"}
-        {:ok, %{status_code: 404}} -> {:error, "status code: 404 (not found)"}
-        {:error, %{reason: reason}} -> {:error, "reason: #{inspect(reason)}"}
+        {:ok, %{status_code: code}} -> {:error, status(code)}
+        {:error, %{reason: reason}} -> {:error, error(reason)}
+        unknown -> {:error, error(unknown)}
       end
     rescue
-      error -> {:error, "exception: #{Exception.message(error)}"}
+      exception -> {:error, error(exception)}
     end
   end
 
   ## Private functions
+
+  @spec status(pos_integer) :: String.t()
+  defp status(301), do: "status code: 301 ⇒ Moved Permanently"
+  defp status(302), do: "status code: 302 ⇒ Found"
+  defp status(404), do: "status code: 404 ⇒ Not Found"
+  defp status(code), do: "status code: #{code}"
+
+  @spec error(term) :: String.t()
+  defp error(reason), do: "reason: #{inspect(reason)}"
 
   # @doc """
   # Returns a URL based on `user` and `project`.
