@@ -25,3 +25,5 @@ config :io_ansi_table,
   sort_specs: [
     "created_at"
   ]
+
+config :log_reset, reset?: true
