@@ -4,7 +4,7 @@ defmodule GitHub.Issues.Mixfile do
   def project do
     [
       app: :github_issues,
-      version: "0.4.27",
+      version: "0.4.28",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       name: "GitHub Issues",
@@ -30,15 +30,7 @@ defmodule GitHub.Issues.Mixfile do
 
   defp package do
     [
-      files: [
-        "lib",
-        "mix.exs",
-        "README*",
-        "config/persist*.exs",
-        "config/dev.exs",
-        "config/prod.exs",
-        "config/test.exs"
-      ],
+      files: ["lib", "mix.exs", "README*", "config/persist*.exs"],
       maintainers: ["Raymond Loranger"],
       licenses: ["MIT"],
       links: %{"GitHub" => source_url()}

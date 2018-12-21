@@ -51,5 +51,5 @@ config :logger, :error_log, path: "./log/error.log", level: :error
 config :logger, :info_log, format: format
 config :logger, :info_log, path: "./log/info.log", level: :info
 
-import_config "#{Mix.env()}.exs"
-import_config "persist*.exs"
+import_config "persist.#{Mix.env()}.exs"
+import_config "persist_*.exs"
