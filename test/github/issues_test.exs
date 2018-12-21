@@ -39,8 +39,10 @@ defmodule GitHub.IssuesTest do
     test ~S[error "status code: 404 Not Found" if bad url given] do
       url = "https://api.github.com/what"
 
-      assert Issues.fetch("any", "any", url) ==
-               {:error, "status code: 404 ⇒ Not Found"}
+      assert Issues.fetch("any", "any", url) in [
+               {:error, "status code: 404 ⇒ Not Found"},
+               {:error, "status code: 403 ⇒ Forbidden"}
+             ]
     end
   end
 end
