@@ -16,7 +16,7 @@
   "map_sorter": {:hex, :map_sorter, "0.2.29", "15df5f31d33edb91b38f8ac7eb998e7c80244040d863a1579d54b1504682e6ab", [:mix], [{:persist_config, "~> 0.2", [hex: :persist_config, repo: "hexpm", optional: false]}], "hexpm"},
   "metrics": {:hex, :metrics, "1.0.1", "25f094dea2cda98213cecc3aeff09e940299d950904393b2a29d191c346a8486", [:rebar3], [], "hexpm"},
   "mimerl": {:hex, :mimerl, "1.0.2", "993f9b0e084083405ed8252b99460c4f0563e41729ab42d9074fd5e52439be88", [:rebar3], [], "hexpm"},
-  "mix_tasks": {:git, "https://github.com/RaymondLoranger/mix_tasks.git", "2b06e7d27bdabd7096e8c17adef98ae143127ad6", []},
+  "mix_tasks": {:git, "https://github.com/RaymondLoranger/mix_tasks.git", "c0d7db332d093d1eee1c968b8fd13886c9b0eb6d", []},
   "nimble_parsec": {:hex, :nimble_parsec, "0.5.0", "90e2eca3d0266e5c53f8fbe0079694740b9c91b6747f2b7e3c5d21966bba8300", [:mix], [], "hexpm"},
   "parse_trans": {:hex, :parse_trans, "3.3.0", "09765507a3c7590a784615cfd421d101aec25098d50b89d7aa1d66646bc571c1", [:rebar3], [], "hexpm"},
   "persist_config": {:hex, :persist_config, "0.2.14", "5c8ada945c4115a84d530699c1716981e391e611556e5b9711bf19c0bebfe090", [:mix], [], "hexpm"},
