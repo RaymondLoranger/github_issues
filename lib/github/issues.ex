@@ -23,7 +23,7 @@ defmodule GitHub.Issues do
 
     - `user`         - GitHub user
     - `project`      - GitHub project
-    - `url_template` - URL template
+    - `url_template` - URL template (EEx sting)
 
   ## Examples
 
