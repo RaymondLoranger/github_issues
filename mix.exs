@@ -42,7 +42,7 @@ defmodule GitHub.Issues.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      # Only using the `IO.ANSI.Table.write/2` function.
+      # Only using the `IO.ANSI.Table.write/3` function.
       included_applications: [:io_ansi_table, :eex],
       extra_applications: [:logger]
     ]
