@@ -24,9 +24,9 @@ defmodule GitHub.Issues.CLI do
   @switches get_env(:default_switches)
   @table_spec get_env(:table_spec)
 
-  @typep bell :: boolean
-  @typep count :: pos_integer
-  @typep parsed :: {user, project, count, bell, Style.t()} | :help
+  @type bell :: boolean
+  @type count :: pos_integer
+  @type parsed :: {user, project, count, bell, Style.t()} | :help
   @type project :: String.t()
   @type user :: String.t()
 

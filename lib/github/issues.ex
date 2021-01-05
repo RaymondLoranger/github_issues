@@ -12,7 +12,7 @@ defmodule GitHub.Issues do
 
   @url_template get_env(:url_template)
 
-  @typep issue :: map
+  @type issue :: map
 
   @doc """
   Fetches issues from a GitHub `project` of a given `user`.
