@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/RaymondLoranger/github_issues.svg?branch=master)](https://travis-ci.org/RaymondLoranger/github_issues)
 
-Prints GitHub Issues to STDOUT in a table with borders and colors.
+Writes GitHub Issues to stdout in a table with borders and colors.
 
 ##### Inspired by the book [Programming Elixir](https://pragprog.com/book/elixir16/programming-elixir-1-6) by Dave Thomas.
 

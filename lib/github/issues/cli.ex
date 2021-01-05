@@ -2,70 +2,44 @@
 # │ Inspired by the book "Programming Elixir" by Dave Thomas. │
 # └───────────────────────────────────────────────────────────┘
 defmodule GitHub.Issues.CLI do
-  use PersistConfig
-
-  @book_ref Application.get_env(@app, :book_ref)
-
   @moduledoc """
-  Parses the command line and generates a table of
-  the first or last _n_ issues of a GitHub project.
+  Parses the command line and prints a table of the first or last _n_ issues
+  of a GitHub project.
 
-  ##### #{@book_ref}
+  ##### Inspired by the book [Programming Elixir](https://pragprog.com/book/elixir16/programming-elixir-1-6) by Dave Thomas.
   """
 
-  alias GitHub.Issues
-  alias GitHub.Issues.Help
-  alias IO.ANSI.Table
-  alias IO.ANSI.Table.Style
+  use PersistConfig
 
   require Logger
 
-  @type bell :: boolean
-  @type count :: integer
-  @type parsed :: {user, project, count, bell, Style.t()} | :help
+  alias GitHub.Issues
+  alias GitHub.Issues.{Help, Log}
+  alias IO.ANSI.Table
+  alias IO.ANSI.Table.Style
+
+  @aliases get_env(:aliases)
+  @count get_env(:default_count)
+  @strict get_env(:strict)
+  @switches get_env(:default_switches)
+  @table_spec get_env(:table_spec)
+
+  @typep bell :: boolean
+  @typep count :: pos_integer
+  @typep parsed :: {user, project, count, bell, Style.t()} | :help
   @type project :: String.t()
   @type user :: String.t()
 
-  @aliases Application.get_env(@app, :aliases)
-  @async Application.get_env(:io_ansi_table, :async)
-  @count Application.get_env(@app, :default_count)
-  @strict Application.get_env(@app, :strict)
-  @switches Application.get_env(@app, :default_switches)
-
   @doc """
-  Parses and processes `argv` (command line arguments).
+  Parses the command line and prints a table of the first or last _n_ issues
+  of a GitHub `project`.
 
-  ## Parameters
-
-    - `argv` - command line arguments (list)
-  """
-  @dialyzer {:no_match, main: 1}
-  @spec main([String.t()]) :: :ok | no_return
-  def main(argv) do
-    with {user, project, count, bell, style} <- parse(argv),
-         {:ok, issues} <- Issues.fetch(user, project) do
-      Table.format(issues, count: count, bell: bell, style: style)
-      # Ensure table has printed before returning...
-      Process.sleep((@async && 2000) || 0)
-    else
-      :help -> Help.show_help()
-      {:error, text} -> log_error(text)
-      any -> log_error("unknown: #{inspect(any)}")
-    end
-  end
-
-  @doc """
-  Parses `argv` (command line arguments).
-
-  `argv` can be ["-h"] or ["--help"], which returns :help. Otherwise
-  it contains a user name, project name, and optionally the number
-  of issues to format (the first _n_ ones). To format the last _n_
-  issues, specify switch `--last` which will return a negative count.
-  To ring the bell, specify switch `--bell`. To apply a specific
-  table style, use switch `--table-style`.
-
-  Returns either a tuple of {user, project, count, bell, table_style}
-  or :help if `--help` was specified.
+  `argv` can be "-h" or "--help", which prints info on the command's
+  usage and syntax. Otherwise it contains a `user`, a `project`, and
+  optionally the number of issues to format (the first _n_ ones).
+  To format the last _n_ issues, specify switch `--last`.
+  To ring the bell, specify switch `--bell`.
+  To choose a table style, specify switch `--table-style`.
 
   ## Parameters
 
@@ -76,47 +50,109 @@ defmodule GitHub.Issues.CLI do
     - `-h` or `--help`        - for help
     - `-l` or `--last`        - to format the last _n_ issues
     - `-b` or `--bell`        - to ring the bell
-    - `-t` or `--table-style` - to apply a specific table style
+    - `-t` or `--table-style` - to choose a table style
 
   ## Table styles
 
   #{Style.texts("\s\s- `&arg`&filler - &note\n")}
-
-  ## Examples
-
-      iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["-h"])
-      :help
-
-      iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["user", "project", "99"])
-      {"user", "project", 99, false, :medium}
-
-      iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["user", "project", "88", "--last", "--bell"])
-      {"user", "project", -88, true, :medium}
-
-      iex> alias GitHub.Issues.CLI
-      iex> CLI.parse(["user", "project", "6", "--table-style", "dark"])
-      {"user", "project", 6, false, :dark}
   """
+  @spec main([String.t()]) :: :ok | no_return
+  def main(argv) do
+    case parse(argv) do
+      {user, project, count, bell, style} ->
+        case Issues.fetch(user, project) do
+          {:ok, issues} ->
+            :ok = msg(user, project) |> IO.ANSI.format() |> IO.puts()
+            :ok = Log.info(:printing, {user, project, __ENV__})
+            options = [count: count, bell: bell, style: style]
+            :ok = Table.write(issues, @table_spec, options)
+
+          {:error, text} ->
+            :ok = Log.error(:fetching, {text, user, project})
+            # Ensure message logged before exiting...
+            :ok = Process.sleep(100)
+            System.stop(1)
+        end
+
+      :help ->
+        :ok = Help.show_help()
+        System.stop(0)
+    end
+  end
+
+  ## Private functions
+
+  @spec msg(user, project) :: IO.ANSI.ansilist()
+  defp msg(user, project) do
+    [
+      @table_spec.left_margin,
+      [:light_green, "Printing issues from GitHub "],
+      [:italic, "#{user}/#{project}..."]
+    ]
+  end
+
+  # @doc """
+  # Parses `argv` (command line arguments). Returns either
+  # a tuple of `{user, project, count, bell, table_style}` or `:help`.
+
+  # ## Examples
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.parse(["-h"])
+  #     :help
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.parse(["user", "project", "99"])
+  #     {"user", "project", 99, false, :medium}
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.parse(["user", "project", "88", "--last", "--bell"])
+  #     {"user", "project", -88, true, :medium}
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.parse(["user", "project", "6", "--table-style", "dark"])
+  #     {"user", "project", 6, false, :dark}
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.parse(["user", "project", "6", "-blt", "dark-alt"])
+  #     {"user", "project", -6, true, :dark_alt}
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.parse(["user", "project", "0", "--table-style", "dark"])
+  #     :help
+  # """
   @spec parse([String.t()]) :: parsed
-  def parse(argv) do
+  defp parse(argv) do
     argv
     |> OptionParser.parse(strict: @strict, aliases: @aliases)
     |> to_parsed()
   end
 
-  ## Private functions
+  # @doc """
+  # Converts the output of `OptionParser.parse/2` to `parsed`.
 
-  @spec log_error(String.t()) :: no_return
-  defp log_error(text) do
-    Logger.error("Error fetching from GitHub - #{text}")
-    # Ensure message logged before exiting...
-    Process.sleep(1000)
-    System.halt(2)
-  end
+  # ## Examples
 
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_parsed({[help: true], [], []})
+  #     :help
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_parsed({[help: true], ["anything"], []})
+  #     :help
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_parsed({[], ["user", "project", "13"], []})
+  #     {"user", "project", 13, false, :medium}
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_parsed({
+  #     ...>   [last: true, bell: true, table_style: "dark-alt"],
+  #     ...>   ["user", "project", "13"],
+  #     ...>   []
+  #     ...> })
+  #     {"user", "project", -13, true, :dark_alt}
+  # """
   @spec to_parsed({Keyword.t(), [String.t()], [tuple]}) :: parsed
   defp to_parsed({switches, args, []}) do
     with {user, project, count} <- to_tuple(args),
@@ -129,13 +165,34 @@ defmodule GitHub.Issues.CLI do
 
   defp to_parsed(_), do: :help
 
-  @spec to_tuple([String.t()]) :: {user, project, non_neg_integer} | :error
-  defp to_tuple([user, project, count]) do
-    with {int, ""} when int >= 0 <- Integer.parse(count),
+  # @doc """
+  # Converts `args` to a tuple or `:error`.
+
+  # ## Examples
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_tuple(["user", "project", "7"])
+  #     {"user", "project", 7}
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_tuple(["user", "project", "0"])
+  #     :error
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_tuple([])
+  #     :error
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_tuple(["user", "project"])
+  #     {"user", "project", 9}
+  # """
+  @spec to_tuple([String.t()]) :: {user, project, pos_integer} | :error
+  defp to_tuple([user, project, count] = _args) do
+    with {int, ""} when int > 0 <- Integer.parse(count),
          do: {user, project, int},
          else: (_ -> :error)
   end
 
-  defp to_tuple([user, project]), do: {user, project, @count}
+  defp to_tuple([user, project] = _args), do: {user, project, @count}
   defp to_tuple(_), do: :error
 end

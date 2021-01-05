@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :github_issues,
   aliases: [
@@ -7,6 +7,8 @@ config :github_issues,
     b: :bell,
     t: :table_style
   ]
+
+config :github_issues, default_count: 9
 
 config :github_issues,
   default_switches: [
@@ -35,4 +37,4 @@ config :github_issues,
   ]
 
 config :github_issues,
-  url_template: "https://api.github.com/repos/{user}/{project}/issues"
+  url_template: "https://api.github.com/repos/<%=user%>/<%=project%>/issues"

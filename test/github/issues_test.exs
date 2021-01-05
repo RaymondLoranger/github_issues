@@ -5,43 +5,37 @@ defmodule GitHub.IssuesTest do
 
   doctest Issues
 
-  setup_all do
-    # Prevents info messages...
-    Logger.configure(level: :error)
-  end
-
-  describe "Issues.fetch/2" do
-    test ~S[error "reason: :econnrefused" if bad url given] do
-      url = "http://localhost:1"
-
-      assert Issues.fetch("any", "any", url) ==
-               {:error, "reason: :econnrefused"}
+  describe "Issues.fetch/3" do
+    test ~S[error `:econnrefused` if bad url template given] do
+      assert Issues.fetch("user", "project", "http://localhost:1") ==
+               {:error, "reason => :econnrefused"}
     end
 
-    test ~S[error "reason: :nxdomain" if bad url given] do
-      url = "https://api.github.org/repos/{user}/{project}/issues"
+    test ~S[error `:nxdomain` if bad url template given] do
+      url_template = "api.github.org/repos/<%=user%>/<%=project%>/issues"
 
-      assert Issues.fetch("elixir-lang", "elixir", url) ==
-               {:error, "reason: :nxdomain"}
+      assert Issues.fetch("elixir-lang", "elixir", url_template) ==
+               {:error, "reason => :nxdomain"}
 
-      url = "htps:/api.github.com/what"
+      url_template = "htps:/api.github.com/what"
 
-      assert Issues.fetch("any", "any", url) == {:error, "reason: :nxdomain"}
+      assert Issues.fetch("any", "any", url_template) ==
+               {:error, "reason => :nxdomain"}
     end
 
-    test ~S[error "status code: 301 Moved Permanently" if bad url given] do
-      url = "http://api.github.com/repos/<user>/<project>/issues"
+    test ~S[error `status code 301` if bad url template given] do
+      url_template = "http://api.github.com/repos/<%=user%>/<%=project%>/issues"
 
-      assert Issues.fetch("elixir-lang", "elixir", url) ==
-               {:error, "status code: 301 ⇒ Moved Permanently"}
+      assert Issues.fetch("elixir-lang", "elixir", url_template) ==
+               {:error, "status code 301 ⇒ Moved Permanently"}
     end
 
-    test ~S[error "status code: 404 Not Found" if bad url given] do
-      url = "https://api.github.com/what"
+    test ~S[error `status code 404 or 403` if bad url template given] do
+      url_template = "https://api.github.com/what"
 
-      assert Issues.fetch("any", "any", url) in [
-               {:error, "status code: 404 ⇒ Not Found"},
-               {:error, "status code: 403 ⇒ Forbidden"}
+      assert Issues.fetch("user", "project", url_template) in [
+               {:error, "status code 404 ⇒ Not Found"},
+               {:error, "status code 403 ⇒ Forbidden"}
              ]
     end
   end

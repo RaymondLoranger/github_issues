@@ -4,8 +4,8 @@ defmodule GitHub.Issues.Mixfile do
   def project do
     [
       app: :github_issues,
-      version: "0.4.32",
-      elixir: "~> 1.6",
+      version: "0.4.33",
+      elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       name: "GitHub Issues",
       source_url: source_url(),
@@ -13,8 +13,10 @@ defmodule GitHub.Issues.Mixfile do
       package: package(),
       aliases: aliases(),
       escript: escript(),
-      deps: deps()
-      # dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
+      deps: deps(),
+      # GitHub.Issues.CLI.main/1...
+      # GitHub.Issues.url/3...
+      dialyzer: [plt_add_apps: [:io_ansi_table, :eex]]
     ]
   end
 
@@ -24,7 +26,7 @@ defmodule GitHub.Issues.Mixfile do
 
   defp description do
     """
-    Prints GitHub Issues to STDOUT in a table with borders and colors.
+    Writes GitHub Issues to stdout in a table with borders and colors.
     """
   end
 
@@ -40,6 +42,8 @@ defmodule GitHub.Issues.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      # Only using the `IO.ANSI.Table.write/2` function.
+      included_applications: [:io_ansi_table, :eex],
       extra_applications: [:logger]
     ]
   end
@@ -47,17 +51,16 @@ defmodule GitHub.Issues.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:dialyxir, "~> 1.0", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false},
+      {:file_only_logger, "~> 0.1"},
+      {:httpoison, "~> 1.0"},
+      {:io_ansi_table, "~> 1.0"},
+      {:jsx, "~> 3.0"},
+      {:log_reset, "~> 0.1"},
       {:mix_tasks,
        github: "RaymondLoranger/mix_tasks", only: :dev, runtime: false},
-      {:log_reset, "~> 0.1"},
-      {:persist_config, "~> 0.1"},
-      {:io_ansi_table, "~> 0.3"},
-      {:earmark, "~> 1.0", only: :dev},
-      {:ex_doc, "~> 0.14", only: :dev, runtime: false},
-      {:dialyxir, "~> 0.5", only: :dev, runtime: false},
-      {:httpoison, "~> 1.0"},
-      {:jsx, "~> 2.0"},
-      {:logger_file_backend, "~> 0.0.9"}
+      {:persist_config, "~> 0.4", runtime: false}
     ]
   end
 
