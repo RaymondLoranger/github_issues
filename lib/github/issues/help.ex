@@ -2,6 +2,7 @@ defmodule GitHub.Issues.Help do
   @moduledoc """
   Prints info on the command's usage and syntax.
   """
+
   use PersistConfig
 
   alias IO.ANSI.Table.Style
