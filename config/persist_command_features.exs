@@ -35,6 +35,3 @@ config :github_issues,
     bell: :boolean,
     table_style: :string
   ]
-
-config :github_issues,
-  url_template: "https://api.github.com/repos/<%=user%>/<%=project%>/issues"

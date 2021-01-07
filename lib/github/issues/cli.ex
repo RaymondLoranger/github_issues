@@ -11,8 +11,6 @@ defmodule GitHub.Issues.CLI do
 
   use PersistConfig
 
-  require Logger
-
   alias GitHub.Issues
   alias GitHub.Issues.{Help, Log}
   alias IO.ANSI.Table
@@ -62,15 +60,14 @@ defmodule GitHub.Issues.CLI do
       {user, project, count, bell, style} ->
         case Issues.fetch(user, project) do
           {:ok, issues} ->
-            :ok = msg(user, project) |> IO.ANSI.format() |> IO.puts()
+            :ok = printing(user, project) |> IO.ANSI.format() |> IO.puts()
             :ok = Log.info(:printing, {user, project, __ENV__})
             options = [count: count, bell: bell, style: style]
             :ok = Table.write(issues, @table_spec, options)
 
           {:error, text} ->
+            :ok = error(user, project, text) |> IO.ANSI.format() |> IO.puts()
             :ok = Log.error(:fetching, {text, user, project})
-            # Ensure message logged before exiting...
-            :ok = Process.sleep(100)
             System.stop(1)
         end
 
@@ -82,12 +79,21 @@ defmodule GitHub.Issues.CLI do
 
   ## Private functions
 
-  @spec msg(user, project) :: IO.ANSI.ansilist()
-  defp msg(user, project) do
+  @spec printing(user, project) :: IO.ANSI.ansilist()
+  defp printing(user, project) do
     [
       @table_spec.left_margin,
       [:light_green, "Printing issues from GitHub "],
       [:italic, "#{user}/#{project}..."]
+    ]
+  end
+
+  @spec error(user, project, String.t()) :: IO.ANSI.ansilist()
+  defp error(user, project, text) do
+    [
+      [:light_green, "Error fetching issues from GitHub "],
+      [:italic, "#{user}/#{project}...\n"],
+      [:light_yellow, text]
     ]
   end
 
@@ -144,6 +150,10 @@ defmodule GitHub.Issues.CLI do
   #     iex> alias GitHub.Issues.CLI
   #     iex> CLI.to_parsed({[], ["user", "project", "13"], []})
   #     {"user", "project", 13, false, :medium}
+
+  #     iex> alias GitHub.Issues.CLI
+  #     iex> CLI.to_parsed({[], ["user", "project"], []})
+  #     {"user", "project", 9, false, :medium}
 
   #     iex> alias GitHub.Issues.CLI
   #     iex> CLI.to_parsed({
