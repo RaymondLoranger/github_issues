@@ -135,7 +135,7 @@ defmodule GitHub.Issues.CLI do
   end
 
   # @doc """
-  # Converts the output of `OptionParser.parse/2` to `parsed`.
+  # Converts the output of `OptionParser.parse/2` into `parsed`.
 
   # ## Examples
 
@@ -176,7 +176,7 @@ defmodule GitHub.Issues.CLI do
   defp to_parsed(_), do: :help
 
   # @doc """
-  # Converts `args` to a tuple or `:error`.
+  # Converts `args` into a tuple or `:error`.
 
   # ## Examples
 

@@ -4,14 +4,14 @@ defmodule GitHub.Issues.Mixfile do
   def project do
     [
       app: :github_issues,
-      version: "0.4.35",
+      version: "0.4.36",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       name: "GitHub Issues",
       source_url: source_url(),
       description: description(),
       package: package(),
-      aliases: aliases(),
+      # aliases: aliases(),
       escript: escript(),
       deps: deps(),
       # GitHub.Issues.CLI.main/1...
@@ -64,23 +64,23 @@ defmodule GitHub.Issues.Mixfile do
     ]
   end
 
-  defp aliases do
-    [
-      docs: ["docs", &copy_images/1]
-    ]
-  end
+  # defp aliases do
+  #   [
+  #     docs: ["docs", &copy_images/1]
+  #   ]
+  # end
 
-  defp copy_images(_) do
-    File.cp_r("images", "doc/images", fn src, dst ->
-      # Always true...
-      src || dst
+  # defp copy_images(_) do
+  #   File.cp_r("images", "doc/images", fn src, dst ->
+  #     # Always true...
+  #     src || dst
 
-      # IO.gets(~s|Overwriting "#{dst}" with "#{src}".\nProceed? [Yn]\s|) in [
-      #   "y\n",
-      #   "Y\n"
-      # ]
-    end)
-  end
+  #     # IO.gets(~s|Overwriting "#{dst}" with "#{src}".\nProceed? [Yn]\s|) in [
+  #     #   "y\n",
+  #     #   "Y\n"
+  #     # ]
+  #   end)
+  # end
 
   defp escript do
     [
