@@ -54,7 +54,7 @@ defmodule GitHub.Issues.CLI do
 
   #{Style.texts("\s\s- `&arg`&filler - &note\n")}
   """
-  @spec main([String.t()]) :: :ok | no_return
+  @spec main(OptionParser.argv()) :: :ok | no_return
   def main(argv) do
     case parse(argv) do
       {user, project, count, bell, style} ->
@@ -127,7 +127,7 @@ defmodule GitHub.Issues.CLI do
   #     iex> CLI.parse(["user", "project", "0", "--table-style", "dark"])
   #     :help
   # """
-  @spec parse([String.t()]) :: parsed
+  @spec parse(OptionParser.argv()) :: parsed
   defp parse(argv) do
     argv
     |> OptionParser.parse(strict: @strict, aliases: @aliases)
@@ -163,7 +163,9 @@ defmodule GitHub.Issues.CLI do
   #     ...> })
   #     {"user", "project", -13, true, :dark_alt}
   # """
-  @spec to_parsed({Keyword.t(), [String.t()], [tuple]}) :: parsed
+  @spec to_parsed(
+          {OptionParser.parsed(), OptionParser.argv(), OptionParser.errors()}
+        ) :: parsed
   defp to_parsed({switches, args, []}) do
     with {user, project, count} <- to_tuple(args),
          %{help: false, last: last, bell: bell, table_style: table_style} <-
@@ -196,7 +198,7 @@ defmodule GitHub.Issues.CLI do
   #     iex> CLI.to_tuple(["user", "project"])
   #     {"user", "project", 9}
   # """
-  @spec to_tuple([String.t()]) :: {user, project, pos_integer} | :error
+  @spec to_tuple(OptionParser.argv()) :: {user, project, pos_integer} | :error
   defp to_tuple([user, project, count] = _args) do
     with {int, ""} when int > 0 <- Integer.parse(count),
          do: {user, project, int},
