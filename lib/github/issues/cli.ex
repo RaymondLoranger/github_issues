@@ -63,11 +63,11 @@ defmodule GitHub.Issues.CLI do
             :ok = printing(user, project) |> IO.ANSI.format() |> IO.puts()
             :ok = Log.info(:printing, {user, project, __ENV__})
             options = [count: count, bell: bell, style: style]
-            :ok = Table.write(issues, @table_spec, options)
+            :ok = Table.write(@table_spec, issues, options)
 
           {:error, text} ->
             :ok = error(user, project, text) |> IO.ANSI.format() |> IO.puts()
-            :ok = Log.error(:fetching, {text, user, project})
+            :ok = Log.error(:fetching, {text, user, project, __ENV__})
             System.stop(1)
         end
 

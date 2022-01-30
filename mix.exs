@@ -4,7 +4,7 @@ defmodule GitHub.Issues.Mixfile do
   def project do
     [
       app: :github_issues,
-      version: "0.4.39",
+      version: "0.4.40",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       name: "GitHub Issues",
@@ -26,7 +26,7 @@ defmodule GitHub.Issues.Mixfile do
 
   defp description do
     """
-    Writes GitHub Issues to stdout in a table with borders and colors.
+    Writes GitHub Issues to "stdio" in a table with borders and colors.
     """
   end
 

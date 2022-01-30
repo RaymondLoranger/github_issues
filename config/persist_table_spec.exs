@@ -16,4 +16,5 @@ options = [
   margins: [top: 0, bottom: 0, left: 1]
 ]
 
-config :github_issues, table_spec: Spec.new(headers, options) |> Spec.extend()
+config :github_issues,
+  table_spec: Spec.new(headers, options) |> Spec.develop()

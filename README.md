@@ -2,31 +2,28 @@
 
 [![Build Status](https://travis-ci.org/RaymondLoranger/github_issues.svg?branch=master)](https://travis-ci.org/RaymondLoranger/github_issues)
 
-Writes GitHub Issues to stdout in a table with borders and colors.
+Writes GitHub Issues to `:stdio` in a table with borders and colors.
 
 ##### Inspired by the book [Programming Elixir](https://pragprog.com/book/elixir16/programming-elixir-1-6) by Dave Thomas.
 
-## Using
+## Usage
 
-To use `GitHub Issues`, first clone it from GitHub:
+To use `GitHub Issues` locally, run these commands:
 
-  - git clone https://github.com/RaymondLoranger/github_issues
+  - `git clone https://github.com/RaymondLoranger/github_issues`
+  - `cd github_issues`
+  - `mix deps.get`
+  - `mix escript.build`
 
-Then run these commands to build the escript:
+You can now run the application like so on Windows:
 
-  - cd github_issues
-  - mix deps.get
-  - mix escript.build
-
-Now you can run the application like so on Windows:
-
-  - escript gi --help
-  - escript gi elixir-lang elixir 9 -blt dark
+  - `escript gi --help`
+  - `escript gi elixir-lang elixir 9 -blt dark`
 
 On macOS, you would run the application as follows:
 
-  - ./gi --help
-  - ./gi elixir-lang elixir 9 --last --table-style=dark
+  - `./gi --help`
+  - `./gi elixir-lang elixir 9 --last --table-style=dark`
 
 ## Examples
 ## ![medium](images/medium.png)
