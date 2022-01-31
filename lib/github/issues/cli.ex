@@ -16,17 +16,9 @@ defmodule GitHub.Issues.CLI do
   alias IO.ANSI.Table
   alias IO.ANSI.Table.Style
 
-  @count "9"
-  @options [
-    strict: [
-      help: :boolean,
-      bell: :boolean,
-      last: :boolean,
-      table_style: :string
-    ],
-    aliases: [h: :help, b: :bell, l: :last, t: :table_style]
-  ]
-  @switches %{help: nil, bell: false, last: false, table_style: "medium"}
+  @count get_env(:default_count)
+  @options get_env(:parsing_options)
+  @switches get_env(:default_switches)
   @table_spec get_env(:table_spec)
 
   @typedoc "GitHub project"

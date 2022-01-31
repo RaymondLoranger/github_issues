@@ -14,16 +14,13 @@ To use `GitHub Issues` locally, run these commands:
   - `cd github_issues`
   - `mix deps.get`
   - `mix escript.build`
+  - `mix escript.install`
 
-You can now run the application like so on Windows:
+You can now run the application like so:
 
-  - `escript gi --help`
-  - `escript gi elixir-lang elixir 9 -blt dark`
-
-On macOS, you would run the application as follows:
-
-  - `./gi --help`
-  - `./gi elixir-lang elixir 9 --last --table-style=dark`
+  - `gi --help`
+  - `gi elixir-lang elixir 9 -blt dark`
+  - `gi elixir-lang elixir 9 --last --table-style=dark`
 
 ## Examples
 ## ![medium](images/medium.png)

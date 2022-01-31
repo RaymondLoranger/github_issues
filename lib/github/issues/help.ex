@@ -18,26 +18,16 @@ defmodule GitHub.Issues.Help do
   @spec show_help() :: :ok
   def show_help() do
     # Examples of usage on Windows:
-    #   escript gi --help
-    #   escript gi elixir-lang elixir 7 --last
-    #   escript gi myfreeweb httpotion --bell
-    #   escript gi dynamo dynamo -lb 8 -t green-border
-    #   escript gi dynamo dynamo -bl 9 --table-style=dark
-    #   escript gi dynamo dynamo 11 -blt light
-    # Examples of usage on macOS:
-    #   ./gi dynamo dynamo
-    {types, texts} =
-      case :os.type() do
-        {:win32, _} ->
-          {[:section, :normal, :command, :normal],
-           ["usage:", " ", "escript", " #{@escript}"]}
-
-        {:unix, _} ->
-          {[:section, :normal], ["usage:", " ./#{@escript}"]}
-      end
-
-    filler = String.duplicate("", Enum.join(texts) |> String.length())
-    prefix = help_format(types, texts)
+    #   gi --help
+    #   gi elixir-lang elixir 7 --last
+    #   gi myfreeweb httpotion --bell
+    #   gi dynamo dynamo -lb 8 -t green-border
+    #   gi dynamo dynamo -bl 9 --table-style=dark
+    #   gi dynamo dynamo 11 -blt light
+    #   gi dynamo dynamo
+    texts = ["usage:", " #{@escript}"]
+    filler = String.pad_leading("", Enum.join(texts) |> String.length())
+    prefix = help_format([:section, :normal], texts)
 
     line_user_project =
       help_format([:switch, :arg, :normal, :arg], [
@@ -109,9 +99,12 @@ defmodule GitHub.Issues.Help do
     Enum.each(texts, &IO.puts/1)
   end
 
+  ## Private functions
+
   @spec help_format([atom], [String.t()]) :: IO.ANSI.ansidata()
   defp help_format(types, texts) do
-    Enum.map(types, &@help_attrs[&1])
+    types
+    |> Enum.map(&@help_attrs[&1])
     |> Enum.zip(texts)
     |> Enum.map(&Tuple.to_list/1)
     |> IO.ANSI.format()

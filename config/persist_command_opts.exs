@@ -1,11 +1,22 @@
 import Config
 
+config :github_issues, default_count: "9"
+
 config :github_issues,
-  help_attrs: %{
-    arg: :light_cyan,
-    command: :light_yellow,
-    normal: :reset,
-    section: :light_green,
-    switch: :light_yellow,
-    value: :light_magenta
+  default_switches: %{
+    help: nil,
+    bell: false,
+    last: false,
+    table_style: "medium"
   }
+
+config :github_issues,
+  parsing_options: [
+    strict: [
+      help: :boolean,
+      bell: :boolean,
+      last: :boolean,
+      table_style: :string
+    ],
+    aliases: [h: :help, b: :bell, l: :last, t: :table_style]
+  ]
