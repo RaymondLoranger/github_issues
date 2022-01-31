@@ -1,6 +1,6 @@
 defmodule GitHub.Issues.Help do
   @moduledoc """
-  Prints info on the command's usage and syntax.
+  Prints info on the escript command's usage and syntax.
   """
 
   use PersistConfig
@@ -13,7 +13,7 @@ defmodule GitHub.Issues.Help do
   @switches get_env(:default_switches)
 
   @doc """
-  Prints info on the command's usage and syntax.
+  Prints info on the escript command's usage and syntax.
   """
   @spec show_help() :: :ok
   def show_help() do

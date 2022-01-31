@@ -36,7 +36,7 @@ defmodule GitHub.Issues do
           {:ok, [issue]} | {:error, String.t()}
   def fetch(user, project, url_template \\ @url_template) do
     url = url(user, project, url_template)
-    :ok = Log.info(:fetching, {user, project, url, __ENV__})
+    :ok = Log.info(:fetching_issues, {user, project, url, __ENV__})
 
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
