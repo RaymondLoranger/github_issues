@@ -17,11 +17,11 @@ defmodule GitHub.Issues do
 
   @doc """
   Fetches issues from the GitHub `project` of a given `user`.
-
+  
   Returns a tuple of either `{:ok, [issue]}` or `{:error, text}`.
-
+  
   ## Examples
-
+  
       iex> alias GitHub.Issues
       iex> {:ok, issues} = Issues.fetch("opendrops", "passport")
       iex> Enum.all?(issues, &is_map/1) and length(issues) > 0
