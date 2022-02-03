@@ -12,7 +12,7 @@ defmodule GitHub.Issues.CLI do
   use PersistConfig
 
   alias GitHub.Issues
-  alias GitHub.Issues.{Help, Log}
+  alias GitHub.Issues.{Help, Log, Message}
   alias IO.ANSI.Table
   alias IO.ANSI.Table.Style
 
@@ -74,7 +74,7 @@ defmodule GitHub.Issues.CLI do
          {count, ""} when count > 0 <- Integer.parse(count),
          count = if(last?, do: -count, else: count),
          options = [count: count, bell: bell?, style: style] do
-      :ok = maybe_write_table(user, project, options)
+      :ok = likely_write_table(user, project, options)
     else
       _error -> :ok = Help.show_help()
     end
@@ -84,14 +84,16 @@ defmodule GitHub.Issues.CLI do
     :ok = Help.show_help()
   end
 
-  @spec maybe_write_table(user, project, Keyword.t()) :: :ok
-  defp maybe_write_table(user, project, options) do
+  @spec likely_write_table(user, project, Keyword.t()) :: :ok
+  defp likely_write_table(user, project, options) do
     case Issues.fetch(user, project) do
       {:ok, issues} ->
+        :ok = Message.writing_table(user, project)
         :ok = Log.info(:writing_table, {user, project, __ENV__})
         :ok = Table.write(@table_spec, issues, options)
 
       {:error, text} ->
+        :ok = Message.fetching_error(user, project, text)
         :ok = Log.error(:fetching_error, {user, project, text, __ENV__})
     end
   end

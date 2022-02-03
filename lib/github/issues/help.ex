@@ -17,7 +17,7 @@ defmodule GitHub.Issues.Help do
   """
   @spec show_help() :: :ok
   def show_help() do
-    # Examples of usage on Windows:
+    # Examples of usage:
     #   gi --help
     #   gi elixir-lang elixir 7 --last
     #   gi myfreeweb httpotion --bell
