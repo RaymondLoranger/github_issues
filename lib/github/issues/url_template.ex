@@ -10,8 +10,8 @@ defmodule GitHub.Issues.URLTemplate do
   
   ## Parameters
   
-    - `user`         - user
-    - `project`      - project
+    - `user`         - GitHub user
+    - `project`      - GitHub project
     - `url_template` - URL template (EEx string)
   
   ## Examples
