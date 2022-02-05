@@ -34,6 +34,7 @@ defmodule GitHub.Issues.CLI do
   usage and syntax. Otherwise it is a GitHub user, project, and
   optionally the number of issues to format (the first _n_ ones).
   To format the last _n_ issues, specify switch `--last`.
+
   To ring the bell, specify switch `--bell`.
   To choose a table style, specify switch `--table-style`.
 
