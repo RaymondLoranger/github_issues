@@ -5,7 +5,7 @@ defmodule GitHub.Issues.CLI do
   @moduledoc """
   Parses the command line and prints a table of the first or last _n_ issues
   of a GitHub project.
-  
+
   ##### Inspired by the book [Programming Elixir](https://pragprog.com/book/elixir16/programming-elixir-1-6) by Dave Thomas.
   """
 
@@ -29,27 +29,27 @@ defmodule GitHub.Issues.CLI do
   @doc """
   Parses the command line and prints a table of the first or last _n_ issues
   of a GitHub project.
-  
+
   `argv` can be "-h" or "--help", which prints info on the command's
-  usage and syntax. Otherwise it contains a user, a project, and
+  usage and syntax. Otherwise it is a GitHub user, project, and
   optionally the number of issues to format (the first _n_ ones).
   To format the last _n_ issues, specify switch `--last`.
   To ring the bell, specify switch `--bell`.
   To choose a table style, specify switch `--table-style`.
-  
+
   ## Parameters
-  
+
     - `argv` - command line arguments (list)
-  
+
   ## Switches
-  
+
     - `-h` or `--help`        - for help
     - `-b` or `--bell`        - to ring the bell
     - `-l` or `--last`        - to format the last _n_ issues
     - `-t` or `--table-style` - to choose a table style
-  
+
   ## Table styles
-  
+
   #{Style.texts("\s\s- `&arg`&filler - &note\n")}
   """
   @spec main(OptionParser.argv()) :: :ok
