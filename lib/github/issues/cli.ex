@@ -65,7 +65,7 @@ defmodule GitHub.Issues.CLI do
 
   @spec maybe_write_table(Keyword.t(), OptionParser.argv()) :: :ok
   defp maybe_write_table(switches, [user, project]) do
-    :ok = maybe_write_table(switches, [user, project, @count])
+    maybe_write_table(switches, [user, project, @count])
   end
 
   defp maybe_write_table(switches, [user, project, count]) do
