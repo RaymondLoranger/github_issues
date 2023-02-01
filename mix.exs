@@ -4,7 +4,7 @@ defmodule GitHub.Issues.Mixfile do
   def project do
     [
       app: :github_issues,
-      version: "0.4.47",
+      version: "0.4.48",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       name: "GitHub Issues",
@@ -54,7 +54,7 @@ defmodule GitHub.Issues.Mixfile do
       {:dialyxir, "~> 1.0", only: :dev, runtime: false},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
       {:file_only_logger, "~> 0.1"},
-      {:httpoison, "~> 1.0"},
+      {:httpoison, "~> 2.0"},
       {:io_ansi_table, "~> 1.0"},
       {:jsx, "~> 3.0"},
       {:log_reset, "~> 0.1"},
