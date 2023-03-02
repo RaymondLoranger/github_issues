@@ -10,17 +10,21 @@ Writes GitHub Issues to `:stdio` in a table with borders and colors.
 
 To use `GitHub Issues` locally, run these commands:
 
-  - `git clone https://github.com/RaymondLoranger/github_issues`
-  - `cd github_issues`
-  - `mix deps.get`
-  - `mix escript.build`
-  - `mix escript.install`
+```
+git clone https://github.com/RaymondLoranger/github_issues
+cd github_issues
+mix deps.get
+mix escript.build
+mix escript.install
+```
 
 You can now run the application like so:
 
-  - `gi --help`
-  - `gi elixir-lang elixir 9 -blt dark`
-  - `gi elixir-lang elixir 9 --last --table-style=dark`
+```
+gi --help
+gi elixir-lang elixir 9 -blt dark
+gi elixir-lang elixir 9 --last --table-style=dark
+```
 
 ## Examples
 ## ![medium](images/medium.png)
