@@ -16,19 +16,19 @@ defmodule GitHub.Issues.URLTemplate do
   
   ## Examples
   
-      iex> alias GitHub.Issues
+      iex> alias GitHub.Issues.URLTemplate
       iex> url_template = "api.github.com/repos/<%=user%>/<%=project%>/issues"
-      iex> Issues.url("opendrops", "passport", url_template)
+      iex> URLTemplate.url("opendrops", "passport", url_template)
       "api.github.com/repos/opendrops/passport/issues"
   
-      iex> alias GitHub.Issues
+      iex> alias GitHub.Issues.URLTemplate
       iex> url_template = "elixir-lang.org/<%=project%>/<%=user%>/wow"
-      iex> Issues.url("José", "Elixir", url_template)
+      iex> URLTemplate.url("José", "Elixir", url_template)
       "elixir-lang.org/Elixir/José/wow"
   
-      iex> alias GitHub.Issues
+      iex> alias GitHub.Issues.URLTemplate
       iex> url_template = "elixir-lang.org/<project>/<user>/wow"
-      iex> Issues.url("José", "Elixir", url_template)
+      iex> URLTemplate.url("José", "Elixir", url_template)
       "elixir-lang.org/<project>/<user>/wow"
   """
   @spec url(CLI.user(), CLI.project(), String.t()) :: String.t()

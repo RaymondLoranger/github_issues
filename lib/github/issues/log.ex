@@ -7,7 +7,7 @@ defmodule GitHub.Issues.Log do
     • Error: #{text}
     • User: #{user}
     • Project: #{project}
-    #{from(env, __MODULE__)}
+    #{from(env, __MODULE__)}\
     """
   end
 
@@ -16,7 +16,7 @@ defmodule GitHub.Issues.Log do
     \nWriting table of issues from GitHub...
     • User: #{user}
     • Project: #{project}
-    #{from(env, __MODULE__)}
+    #{from(env, __MODULE__)}\
     """
   end
 
@@ -26,7 +26,7 @@ defmodule GitHub.Issues.Log do
     • URL: #{url}
     • User: #{user}
     • Project: #{project}
-    #{from(env, __MODULE__)}
+    #{from(env, __MODULE__)}\
     """
   end
 end
