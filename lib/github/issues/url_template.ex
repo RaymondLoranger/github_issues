@@ -7,25 +7,25 @@ defmodule GitHub.Issues.URLTemplate do
 
   @doc """
   Returns a URL based on `user`, `project` and `url_template`.
-  
+
   ## Parameters
-  
+
     - `user`         - GitHub user
     - `project`      - GitHub project
     - `url_template` - URL template (EEx string)
-  
+
   ## Examples
-  
+
       iex> alias GitHub.Issues.URLTemplate
       iex> url_template = "api.github.com/repos/<%=user%>/<%=project%>/issues"
       iex> URLTemplate.url("opendrops", "passport", url_template)
       "api.github.com/repos/opendrops/passport/issues"
-  
+
       iex> alias GitHub.Issues.URLTemplate
       iex> url_template = "elixir-lang.org/<%=project%>/<%=user%>/wow"
       iex> URLTemplate.url("José", "Elixir", url_template)
       "elixir-lang.org/Elixir/José/wow"
-  
+
       iex> alias GitHub.Issues.URLTemplate
       iex> url_template = "elixir-lang.org/<project>/<user>/wow"
       iex> URLTemplate.url("José", "Elixir", url_template)
