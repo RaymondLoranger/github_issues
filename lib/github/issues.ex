@@ -23,7 +23,7 @@ defmodule GitHub.Issues do
   ## Examples
 
       iex> alias GitHub.Issues
-      iex> {:ok, issues} = Issues.fetch("opendrops", "passport")
+      iex> {:ok, issues} = Issues.fetch("Kraigie", "nostrum")
       iex> Enum.all?(issues, &is_map/1) and length(issues) > 0
       true
   """
