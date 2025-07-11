@@ -29,26 +29,15 @@ defmodule GitHub.Issues.Help do
     filler = String.pad_leading("", Enum.join(texts) |> String.length())
     prefix = help_format([:section, :normal], texts)
 
-    line_user_project =
-      help_format([:switch, :arg, :normal, :arg], [
-        "[(-h | --help)] ",
-        "<github-user>",
-        " ",
-        "<github-project>"
-      ])
+    line_arguments =
+      help_format([:arg], ["<github-user> <github-project> [<count>]"])
 
-    line_count =
-      help_format([:switch, :normal, :arg, :normal, :switch], [
-        "[(-l | --last)]",
-        " ",
-        "<count>",
-        " ",
-        "[(-b | --bell)]"
-      ])
+    line_flags =
+      help_format([:switch], ["[(-l | --last)] [(-b | --bell)]"])
 
-    line_table_style =
+    line_options =
       help_format([:switch, :arg, :switch], [
-        "[(-t | --table-style)=",
+        "[(-t | --table-style) ",
         "<table-style>",
         "]"
       ])
@@ -71,7 +60,7 @@ defmodule GitHub.Issues.Help do
         "#{@switches[:table_style]}"
       ])
 
-    line_table_style_one_of =
+    line_options_one_of =
       help_format([:normal, :arg, :normal], [
         "  - ",
         "<table-style>",
@@ -79,13 +68,13 @@ defmodule GitHub.Issues.Help do
       ])
 
     IO.write("""
-    #{prefix} #{line_user_project}
-    #{filler} #{line_count}
-    #{filler} #{line_table_style}
+    #{prefix} #{line_arguments}
+    #{filler} #{line_flags}
+    #{filler} #{line_options}
     #{line_where}
     #{line_default_count}
     #{line_default_table_style}
-    #{line_table_style_one_of}
+    #{line_options_one_of}
     """)
 
     template =
