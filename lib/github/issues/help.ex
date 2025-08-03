@@ -37,8 +37,7 @@ defmodule GitHub.Issues.Help do
     line_arguments =
       help_format([:arg], ["<github-user> <github-project> [<count>]"])
 
-    line_flags =
-      help_format([:switch], ["[-l | --last] [-b | --bell]"])
+    line_flags = help_format([:switch], ["[-l | --last] [-b | --bell]"])
 
     line_table_style =
       help_format([:switch, :arg, :switch], [
