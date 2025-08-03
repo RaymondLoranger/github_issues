@@ -2,6 +2,7 @@ defmodule GitHub.Issues.Message do
   use PersistConfig
 
   alias GitHub.Issues.CLI
+  alias IO.ANSI.Plus, as: ANSI
 
   @table_spec get_env(:table_spec)
 
@@ -22,8 +23,7 @@ defmodule GitHub.Issues.Message do
       [:white, "Writing table of issues from GitHub "],
       [:light_white, "#{user}/#{project}..."]
     ]
-    |> IO.ANSI.format()
-    |> IO.puts()
+    |> ANSI.puts()
   end
 
   @spec fetching_error(CLI.user(), CLI.project(), String.t()) :: :ok
@@ -33,7 +33,6 @@ defmodule GitHub.Issues.Message do
       [:light_white, "#{user}/#{project}...\n"],
       [:light_yellow, :string.titlecase(text)]
     ]
-    |> IO.ANSI.format()
-    |> IO.puts()
+    |> ANSI.puts()
   end
 end

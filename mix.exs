@@ -14,9 +14,9 @@ defmodule GitHub.Issues.Mixfile do
       # aliases: aliases(),
       escript: escript(),
       deps: deps(),
-      # See GitHub.Issues.CLI.main/1...
-      # See GitHub.Issues.url/3...
-      dialyzer: [plt_add_apps: [:io_ansi_table, :eex]]
+      # See GitHub.Issues.URLTemplate.url/3...
+      # See GitHub.Issues.CLI.write_table/3...
+      dialyzer: [plt_add_apps: [:eex, :io_ansi_table]]
     ]
   end
 
@@ -44,7 +44,7 @@ defmodule GitHub.Issues.Mixfile do
     [
       # Only using the `IO.ANSI.Table.write/3` function.
       included_applications: [:io_ansi_table],
-      extra_applications: [:logger, :eex, :observer, :wx, :runtime_tools]
+      extra_applications: [:eex, :logger]
     ]
   end
 
@@ -56,6 +56,7 @@ defmodule GitHub.Issues.Mixfile do
       {:file_only_logger, "~> 0.2"},
       # {:file_only_logger, path: "../file_only_logger"},
       {:httpoison, "~> 2.0"},
+      {:io_ansi_plus, "~> 0.1"},
       {:io_ansi_table, "~> 1.0"},
       # {:io_ansi_table, path: "../io_ansi_table"},
       {:jsx, "~> 3.0"},
@@ -65,22 +66,16 @@ defmodule GitHub.Issues.Mixfile do
     ]
   end
 
+  # @cmd "xcopy images doc\\images /Y"
+
   # defp aliases do
   #   [
-  #     docs: ["docs", &copy_images/1]
+  #     docs: ["docs", &echo_xcopy/1, "cmd #{@cmd}"]
   #   ]
   # end
 
-  # defp copy_images(_) do
-  #   File.cp_r("images", "doc/images", fn src, dst ->
-  #     # Always true...
-  #     src || dst
-
-  #     # IO.gets(~s|Overwriting "#{dst}" with "#{src}".\nProceed? [Yn]\s|) in [
-  #     #   "y\n",
-  #     #   "Y\n"
-  #     # ]
-  #   end)
+  # defp echo_xcopy(_) do
+  #   IO.ANSI.Plus.puts([:light_yellow, @cmd])
   # end
 
   defp escript do

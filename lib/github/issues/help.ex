@@ -1,43 +1,48 @@
 defmodule GitHub.Issues.Help do
   @moduledoc """
-  Prints info on the escript command's usage and syntax.
+  Prints info on the escript command's usage and syntax.\s\s
+  Reference https://dev.to/paulasantamaria/command-line-interfaces-structure-syntax-2533
   """
 
   use PersistConfig
 
+  alias IO.ANSI.Plus, as: ANSI
   alias IO.ANSI.Table.Style
 
-  @count get_env(:default_count)
+  @default_count get_env(:default_count)
+  @default_switches get_env(:default_switches)
   @escript Mix.Project.config()[:escript][:name]
   @help_attrs get_env(:help_attrs)
-  @switches get_env(:default_switches)
 
   @doc """
   Prints info on the escript command's usage and syntax.
+
+  ## Examples
+
+      gi --help
+      gi elixir-lang elixir 7 --last
+      gi phoenixframework phoenix --bell
+      gi dynamo dynamo -lb 8 -t green-border
+      gi dynamo dynamo -bl 9 --table-style=dark
+      gi dynamo dynamo 11 -blt light
+      gi dynamo dynamo
   """
-  @spec show_help() :: :ok
-  def show_help() do
-    # Examples of usage:
-    #   gi --help
-    #   gi elixir-lang elixir 7 --last
-    #   gi myfreeweb httpotion --bell
-    #   gi dynamo dynamo -lb 8 -t green-border
-    #   gi dynamo dynamo -bl 9 --table-style=dark
-    #   gi dynamo dynamo 11 -blt light
-    #   gi dynamo dynamo
-    texts = ["usage:", " #{@escript}"]
-    filler = String.pad_leading("", Enum.join(texts) |> String.length())
+  @spec print_help :: :ok
+  def print_help do
+    texts = ["usage: ", "#{@escript}"]
+    length = Enum.join(texts) |> String.length()
+    filler = String.duplicate(" ", length)
     prefix = help_format([:section, :normal], texts)
 
     line_arguments =
       help_format([:arg], ["<github-user> <github-project> [<count>]"])
 
     line_flags =
-      help_format([:switch], ["[(-l | --last)] [(-b | --bell)]"])
+      help_format([:switch], ["[-l | --last] [-b | --bell]"])
 
     line_options =
       help_format([:switch, :arg, :switch], [
-        "[(-t | --table-style) ",
+        "[-t | --table-style ",
         "<table-style>",
         "]"
       ])
@@ -49,7 +54,7 @@ defmodule GitHub.Issues.Help do
         "  - default ",
         "<count>",
         " is ",
-        "#{@count}"
+        "#{@default_count}"
       ])
 
     line_default_table_style =
@@ -57,7 +62,7 @@ defmodule GitHub.Issues.Help do
         "  - default ",
         "<table-style>",
         " is ",
-        "#{@switches[:table_style]}"
+        "#{@default_switches[:table_style]}"
       ])
 
     line_options_one_of =
@@ -96,6 +101,6 @@ defmodule GitHub.Issues.Help do
     |> Enum.map(&@help_attrs[&1])
     |> Enum.zip(texts)
     |> Enum.map(&Tuple.to_list/1)
-    |> IO.ANSI.format()
+    |> ANSI.format()
   end
 end

@@ -4,7 +4,7 @@ config :github_issues, default_count: "9"
 
 config :github_issues,
   default_switches: %{
-    help: nil,
+    help: false,
     bell: false,
     last: false,
     table_style: "medium"
