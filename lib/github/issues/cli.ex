@@ -19,8 +19,8 @@ defmodule GitHub.Issues.CLI do
   alias IO.ANSI.Table.Style
 
   @default_count get_env(:default_count)
-  @parsing_options get_env(:parsing_options)
   @default_switches get_env(:default_switches)
+  @parsing_options get_env(:parsing_options)
   @table_spec get_env(:table_spec)
 
   @typedoc "GitHub project"

@@ -18,8 +18,8 @@ defmodule GitHub.Issues.URLTemplate do
 
       iex> alias GitHub.Issues.URLTemplate
       iex> url_template = "api.github.com/repos/<%=user%>/<%=project%>/issues"
-      iex> URLTemplate.url("opendrops", "passport", url_template)
-      "api.github.com/repos/opendrops/passport/issues"
+      iex> URLTemplate.url("Kraigie", "nostrum", url_template)
+      "api.github.com/repos/Kraigie/nostrum/issues"
 
       iex> alias GitHub.Issues.URLTemplate
       iex> url_template = "elixir-lang.org/<%=project%>/<%=user%>/wow"
