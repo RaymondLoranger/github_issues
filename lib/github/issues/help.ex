@@ -40,7 +40,7 @@ defmodule GitHub.Issues.Help do
     line_flags =
       help_format([:switch], ["[-l | --last] [-b | --bell]"])
 
-    line_options =
+    line_table_style =
       help_format([:switch, :arg, :switch], [
         "[-t | --table-style ",
         "<table-style>",
@@ -65,7 +65,7 @@ defmodule GitHub.Issues.Help do
         "#{@default_switches[:table_style]}"
       ])
 
-    line_options_one_of =
+    line_table_style_one_of =
       help_format([:normal, :arg, :normal], [
         "  - ",
         "<table-style>",
@@ -75,11 +75,11 @@ defmodule GitHub.Issues.Help do
     IO.write("""
     #{prefix} #{line_arguments}
     #{filler} #{line_flags}
-    #{filler} #{line_options}
+    #{filler} #{line_table_style}
     #{line_where}
     #{line_default_count}
     #{line_default_table_style}
-    #{line_options_one_of}
+    #{line_table_style_one_of}
     """)
 
     template =
