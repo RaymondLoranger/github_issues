@@ -23,6 +23,7 @@ gi --help
 gi elixir-lang elixir 9 -blt dark
 gi elixir-lang elixir 9 --last --table-style=dark
 ```
+
 ## Note
 You can click on the image below for a clearer view.
 
