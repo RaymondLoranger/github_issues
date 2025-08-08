@@ -105,7 +105,7 @@ defmodule GitHub.Issues.CLI do
          options = [count: count, bell: bell?, style: style] do
       :ok = write_table(user, project, options)
     else
-      _error -> :ok = Help.print_help()
+      :error -> :ok = Help.print_help()
     end
   end
 
