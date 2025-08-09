@@ -117,13 +117,13 @@ defmodule GitHub.Issues.CLI do
   defp write_table(user, project, options) do
     case Issues.fetch(user, project) do
       {:ok, issues} ->
-        :ok = Message.writing_table(user, project)
         :ok = Log.info(:writing_table, {user, project, __ENV__})
+        :ok = Message.writing_table(user, project)
         :ok = Table.write(@table_spec, issues, options)
 
       {:error, text} ->
-        :ok = Message.fetching_error(user, project, text)
         :ok = Log.error(:fetching_error, {user, project, text, __ENV__})
+        :ok = Message.fetching_error(user, project, text)
     end
   end
 end

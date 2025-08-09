@@ -4,7 +4,7 @@ defmodule GitHub.Issues.Mixfile do
   def project do
     [
       app: :github_issues,
-      version: "0.4.66",
+      version: "0.4.67",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       name: "GitHub Issues",
@@ -14,8 +14,8 @@ defmodule GitHub.Issues.Mixfile do
       # aliases: aliases(),
       escript: escript(),
       deps: deps(),
-      # See GitHub.Issues.URLTemplate.url/3...
-      # See GitHub.Issues.CLI.write_table/3...
+      # Search for "EEx.eval_string"...
+      # Search for "Table.write"...
       dialyzer: [plt_add_apps: [:eex, :io_ansi_table]]
     ]
   end
