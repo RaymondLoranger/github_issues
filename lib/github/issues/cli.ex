@@ -6,7 +6,7 @@ defmodule GitHub.Issues.CLI do
   Parses the command line and prints a table of the first or last _n_ issues
   of a GitHub project.
 
-  ##### Inspired by the book [Programming Elixir](https://pragprog.com/book/elixir16/programming-elixir-1-6) by Dave Thomas.
+  ##### Inspired by the book [Programming Elixir](https://pragprog.com/titles/elixir16/programming-elixir-1-6) by Dave Thomas.
 
   ##### Reference https://dev.to/paulasantamaria/command-line-interfaces-structure-syntax-2533
   """
