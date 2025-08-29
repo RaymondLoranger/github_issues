@@ -32,12 +32,12 @@ defmodule GitHub.Issues.CLI do
   Parses the command line and prints a table of the first or last _n_ issues
   of a GitHub project.
 
-  `argv` can be "-h" or "--help", which prints info on the command's
-  usage and syntax. Otherwise it is a GitHub user, a GitHub project, and
-  optionally the number of issues to format (the first _n_ ones).
+  `argv` can be "-h" or "--help", which prints info on the command's usage and
+  syntax. Otherwise it is a GitHub user, a GitHub project, and optionally the
+  number of issues to format (the first _n_ ones).
 
-  To format the last _n_ issues, specify switch `--last`.
-  To ring the bell, specify switch `--bell`.
+  To format the last _n_ issues, specify switch `--last`.\s\s
+  To ring the bell, specify switch `--bell`.\s\s
   To choose a table style, specify switch `--table-style`.
 
   ## Parameters
@@ -81,7 +81,7 @@ defmodule GitHub.Issues.CLI do
   ## Examples
 
       $env:MIX_ENV="test"; mix run -e 'GitHub.Issues.CLI.main()'
-      $env:MIX_ENV="dev"; mix run -e 'GitHub.Issues.CLI.main()'
+      $env:MIX_ENV="dev";  mix run -e 'GitHub.Issues.CLI.main()'
       $env:MIX_ENV="prod"; mix run -e 'GitHub.Issues.CLI.main()'
   """
   @spec main :: :ok
@@ -91,7 +91,7 @@ defmodule GitHub.Issues.CLI do
 
   ## Private functions
 
-  @spec maybe_write_table(Keyword.t(), OptionParser.argv()) :: :ok
+  @spec maybe_write_table(keyword, OptionParser.argv()) :: :ok
   defp maybe_write_table(switches, [user, project]) do
     maybe_write_table(switches, [user, project, @default_count])
   end
@@ -100,12 +100,12 @@ defmodule GitHub.Issues.CLI do
     with %{help: false, bell: bell?, last: last?, table_style: style} <-
            Map.merge(@default_switches, Map.new(switches)),
          {:ok, style} <- Style.from_switch_arg(style),
-         {count, ""} when count > 0 <- Integer.parse(count),
-         count = if(last?, do: -count, else: count),
-         options = [count: count, bell: bell?, style: style] do
+         {count, ""} when count > 0 <- Integer.parse(count) do
+      count = if(last?, do: -count, else: count)
+      options = [count: count, bell: bell?, style: style]
       :ok = write_table(user, project, options)
     else
-      :error -> :ok = Help.print_help()
+      _error -> :ok = Help.print_help()
     end
   end
 
@@ -113,7 +113,7 @@ defmodule GitHub.Issues.CLI do
     :ok = Help.print_help()
   end
 
-  @spec write_table(user, project, Keyword.t()) :: :ok
+  @spec write_table(user, project, keyword) :: :ok
   defp write_table(user, project, options) do
     case Issues.fetch(user, project) do
       {:ok, issues} ->
